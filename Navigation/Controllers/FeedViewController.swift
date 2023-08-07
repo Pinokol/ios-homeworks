@@ -14,15 +14,14 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemPurple
-        
-        self.view.addSubview(self.button)
-        self.button.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -100).isActive = true
-        self.button.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
-        self.button.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
-        self.button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.view.addSubview(self.feedButton)
+        self.feedButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -100).isActive = true
+        self.feedButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
+        self.feedButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
+        self.feedButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
-    private lazy var button: UIButton = {
+    private lazy var feedButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .blue
         button.layer.cornerRadius = 12
@@ -34,8 +33,7 @@ class FeedViewController: UIViewController {
         return button
     }()
     
-    
-    @objc private func buttonAction() {
+    @objc private func buttonAction(sender: UIButton) {
         let postViewController = PostViewController()
         postViewController.titlePost = post.title
         self.navigationController?.pushViewController(postViewController, animated: true)

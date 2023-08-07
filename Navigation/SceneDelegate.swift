@@ -20,25 +20,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         func createFeedViewController() -> UINavigationController {
             let feedViewController = FeedViewController()
-            feedViewController.title = "Лента"
+            feedViewController.title = "Feed"
             
-            feedViewController.tabBarItem = UITabBarItem(title: "Лента", image: UIImage(systemName: "doc.richtext"), tag: 0)
+            feedViewController.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "doc.richtext"), tag: 0)
             return UINavigationController(rootViewController: feedViewController)
         }
         
         func createProfileViewController() -> UINavigationController {
             let profileViewController = ProfileViewController()
-            profileViewController.title = "Профиль"
-            profileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.circle"), tag: 1)
+            profileViewController.title = "Profile"
+            profileViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.circle"), tag: 1)
             return UINavigationController(rootViewController: profileViewController)
         }
+        
         let tabBarController = UITabBarController()
-        UITabBar.appearance().backgroundColor = .gray
+        UITabBar.appearance().backgroundColor = .white
         tabBarController.viewControllers = [createFeedViewController(), createProfileViewController()]
         tabBarController.selectedIndex = 0
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
         self.window = window
     }
-    
 }
