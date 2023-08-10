@@ -13,7 +13,7 @@ final class ProfileHeaderView: UIView {
     
     var onDetailShow: Action?
     
-    private let tigrImageView: UIImageView = {
+    private let avatarImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "ImageTigr"))
         imageView.backgroundColor = .green
         imageView.layer.borderWidth = 3.0
@@ -24,7 +24,7 @@ final class ProfileHeaderView: UIView {
         return imageView
     }()
     
-    private let profileName: UILabel = {
+    private let fullNameLabel: UILabel = {
         let name = UILabel()
         name.text = "Hipster Tigr"
         name.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -33,7 +33,7 @@ final class ProfileHeaderView: UIView {
         return name
     }()
     
-    private let profileSignature: UILabel = {
+    private let statusLabel: UILabel = {
         let signature = UILabel()
         signature.text = "Waiting for somethink..."
         signature.font = UIFont.systemFont(ofSize: 14, weight: .regular)
@@ -42,7 +42,7 @@ final class ProfileHeaderView: UIView {
         return signature
     }()
     
-    private lazy var showStatusButton: UIButton = {
+    private lazy var setStatusButton: UIButton = {
         
         let button = UIButton()
         button.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
@@ -61,62 +61,84 @@ final class ProfileHeaderView: UIView {
         return button
     }()
     
+    private var statusTextField: UITextField = {
+        var textField = UITextField()
+        textField.text = "Новый статус"
+        textField.backgroundColor = .white
+        textField.layer.cornerRadius = 12.0
+        textField.layer.borderWidth = 1.0
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        textField.textColor = .black
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "введите новый статус здесь"
+        
+        textField.keyboardType = UIKeyboardType.default
+        textField.returnKeyType = UIReturnKeyType.done
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing;
+        textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        
+        return textField
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        addTarget()
+        setStatusButton.addTarget(self, action: #selector(tapOnButton), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func addTarget() {
-        showStatusButton.addTarget(self, action: #selector(tapOnButton), for: .touchUpInside)
-    }
-    
     @objc
     private func buttonPressed(sender: UIButton) {
-        if let buttonText = showStatusButton.currentTitle {
+        if let buttonText = setStatusButton.currentTitle {
             print(buttonText)
         }
     }
     
     @objc
     private func tapOnButton(sender: UIButton) {
-        
         onDetailShow?()
-        
     }
     
     private func setupUI() {
-        addSubview(tigrImageView)
-        addSubview(profileName)
-        addSubview(showStatusButton)
-        addSubview(profileSignature)
+        addSubview(avatarImageView)
+        addSubview(fullNameLabel)
+        addSubview(setStatusButton)
+        addSubview(statusLabel)
+        addSubview(statusTextField)
+        
+        
+        
+        let safeAreaGuide = self.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            tigrImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
-            tigrImageView.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 16),
-            tigrImageView.widthAnchor.constraint(equalToConstant: 94),
-            tigrImageView.heightAnchor.constraint(equalToConstant: 94),
+            avatarImageView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 16),
+            avatarImageView.leftAnchor.constraint(equalTo: safeAreaGuide.leftAnchor, constant: 16),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 94),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 94),
+            
+            fullNameLabel.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 27),
+            fullNameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            
+            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
+            setStatusButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
+            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            setStatusButton.widthAnchor.constraint(equalToConstant: 360),
+            
+            
+            statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -45),
+            statusLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -14),
+            
+            statusTextField.heightAnchor.constraint(equalToConstant: 25),
+            statusTextField.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 50),
+            statusTextField.rightAnchor.constraint(equalTo: safeAreaGuide.rightAnchor, constant: -16),
+            
         ])
         
-        NSLayoutConstraint.activate([
-            profileName.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 27),
-            profileName.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            showStatusButton.topAnchor.constraint(equalTo: tigrImageView.safeAreaLayoutGuide.bottomAnchor, constant: 16),
-            showStatusButton.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 16),
-            showStatusButton.heightAnchor.constraint(equalToConstant: 50),
-            showStatusButton.widthAnchor.constraint(equalToConstant: 360)
-        ])
-        
-        NSLayoutConstraint.activate([
-            profileSignature.bottomAnchor.constraint(equalTo: showStatusButton.topAnchor, constant: -34),
-            profileSignature.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor)
-        ])
     }
 }
