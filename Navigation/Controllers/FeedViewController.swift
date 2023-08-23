@@ -70,7 +70,7 @@ class FeedViewController: UIViewController {
     }
     
     func setupContraints() {
-        let safeAreaGuide = view.safeAreaLayoutGuide
+        _ = view.safeAreaLayoutGuide
     }
     
     @objc
@@ -78,6 +78,5 @@ class FeedViewController: UIViewController {
         let postViewController = PostViewController()
         navigationController?.pushViewController(postViewController, animated: true)
     }
-    
 }
 

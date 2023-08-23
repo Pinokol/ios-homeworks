@@ -24,4 +24,5 @@ class PostViewController: UIViewController {
         infoViewController.modalTransitionStyle = .coverVertical
         present(infoViewController, animated: true)
     }
+    
 }

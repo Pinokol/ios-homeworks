@@ -35,7 +35,7 @@ final class ProfileHeaderView: UIView {
     
     private let statusLabel: UILabel = {
         let signature = UILabel()
-        signature.text = "Waiting for somethink..."
+        signature.text = "Listening to music"
         signature.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         signature.textColor = .gray
         signature.translatesAutoresizingMaskIntoConstraints = false
@@ -52,9 +52,9 @@ final class ProfileHeaderView: UIView {
         
         button.backgroundColor = .blue
         button.layer.cornerRadius = 14.0
-        button.setTitle("Show status", for: .normal)
+        button.setTitle("Set status", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24.0)
+        //button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24.0)
         button.setTitleShadowColor(.black, for: .application)
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +63,6 @@ final class ProfileHeaderView: UIView {
     
     private var statusTextField: UITextField = {
         var textField = UITextField()
-        textField.text = "Новый статус"
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 12.0
         textField.layer.borderWidth = 1.0
@@ -124,21 +123,23 @@ final class ProfileHeaderView: UIView {
             fullNameLabel.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 27),
             fullNameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
-            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
+            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 46),
             setStatusButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 50),
             setStatusButton.widthAnchor.constraint(equalToConstant: 360),
             
             
-            statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -45),
-            statusLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -65),
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -14),
+            statusLabel.rightAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 155),
             
-            statusTextField.heightAnchor.constraint(equalToConstant: 25),
-            statusTextField.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 50),
+            statusTextField.heightAnchor.constraint(equalToConstant: 35),
+            statusTextField.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 35),
             statusTextField.rightAnchor.constraint(equalTo: safeAreaGuide.rightAnchor, constant: -16),
+            
             
         ])
         
     }
+    
 }
