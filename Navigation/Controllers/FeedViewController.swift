@@ -5,7 +5,7 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    var post = Post(title: "Мой пост")
+    var post = PostFeed(title: "Мой пост")
     
     private lazy var feedButton1: UIButton = { [unowned self] in
         let button = UIButton()

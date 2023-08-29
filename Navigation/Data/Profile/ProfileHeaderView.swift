@@ -143,3 +143,12 @@ final class ProfileHeaderView: UIView {
     }
     
 }
+
+extension ProfileHeaderView: UITextFieldDelegate {
+    
+    // tap 'done' on the keyboard
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}

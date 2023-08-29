@@ -4,5 +4,12 @@
 //
 //  Created by Виталий Мишин on 24.08.2023.
 //
+import UIKit
 
-import Foundation
+public extension UIView {
+    func addSubviews(_ subviews: UIView...) {
+        for i in subviews {
+            self.addSubview(i)
+        }
+    }
+}
