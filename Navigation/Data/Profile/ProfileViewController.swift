@@ -9,70 +9,68 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private lazy var profileHeaderView = ProfileHeaderView()
-    
-    private lazy var profileButton: UIButton = { [unowned self] in
-        let button = UIButton()
-        button.isUserInteractionEnabled = true
-        button.backgroundColor = .blue
-        button.layer.cornerRadius = 4.0
-        button.setTitle("New button", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24.0)
-        button.setTitleShadowColor(.black, for: .application)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    static let headerIdent = "header"
+    static let postIdent = "post"
+    private lazy var postTableView: UITableView = {
+        let tableView = UITableView.init(frame: .zero,style: .grouped)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: ProfileViewController.headerIdent)
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: ProfileViewController.postIdent)
+        return tableView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
-        view.addSubview(self.profileHeaderView)
-        view.addSubview(profileButton)
+        view.addSubview(self.postTableView)
+        postTableView.dataSource = self
+        postTableView.delegate = self
         setupConstraint()
-        profileButton.addTarget(self, action: #selector (newButtonPressed), for: .touchUpInside)
-        
+        self.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.circle"), tag: 1)
     }
-    
-    @objc
-    private func newButtonPressed(sender: UIButton) {
-        if let buttonText = profileButton.currentTitle {
-            print(buttonText)
-        }
-    }
-    
-    override func viewWillLayoutSubviews() {
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .white
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-        navigationController?.navigationBar.tintColor = .black
-        
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-    }
-    
-    func setupConstraint() {
-        let safeAreaGuide = view.safeAreaLayoutGuide
-        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
-        
+     
+    private func setupConstraint() {
         NSLayoutConstraint.activate([
-            profileHeaderView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: 0),
-            profileHeaderView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 0),
-            profileHeaderView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor),
-            profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
-            
-            profileButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 0),
-            profileButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: 0),
-            profileButton.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor),
-            profileButton.heightAnchor.constraint(equalToConstant: 50),
+            postTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            postTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            postTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            postTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-        
     }
     
 }
 
+extension ProfileViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        postExamples.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileViewController.postIdent, for: indexPath) as? PostTableViewCell else {
+            fatalError("could not dequeue Reusable Cell")
+        }
+        cell.update(model: postExamples[indexPath.row])
+        return cell
+    }
+
+}
+
+extension ProfileViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 270 : 0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileViewController.headerIdent) as? ProfileHeaderView else {
+            fatalError("could not dequeue Reusable Cell")
+        }
+        return headerView
+    }
+}
+    

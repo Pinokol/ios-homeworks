@@ -11,7 +11,7 @@ class `PostTableViewCell`: UITableViewCell {
     var postAuthor: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .black
         label.numberOfLines = 2
         return label
@@ -58,7 +58,7 @@ class `PostTableViewCell`: UITableViewCell {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("Ups")
+        fatalError("Error")
     }
     
     private func setupConstraints() {
@@ -68,7 +68,7 @@ class `PostTableViewCell`: UITableViewCell {
             postAuthor.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 
             postImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            postImage.heightAnchor.constraint(equalTo: postImage.widthAnchor, multiplier: 0.56),
+            postImage.heightAnchor.constraint(equalTo: postImage.widthAnchor, multiplier: 0.75),
             postImage.topAnchor.constraint(equalTo: postAuthor.bottomAnchor, constant: 16),
 
             postDescription.topAnchor.constraint(equalTo: postImage.bottomAnchor, constant: 16),
@@ -89,8 +89,8 @@ class `PostTableViewCell`: UITableViewCell {
         postAuthor.text = model.author
         postDescription.text = model.description
         postImage.image = UIImage(named: model.image)
-        postLikes.text = "Лайк: \(model.likes)"
-        postViews.text = "Просмотров: \(model.views)"
+        postLikes.text = "Likes: \(model.likes)"
+        postViews.text = "Views: \(model.views)"
     }
 }
 
