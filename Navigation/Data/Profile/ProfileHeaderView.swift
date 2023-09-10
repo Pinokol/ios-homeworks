@@ -31,7 +31,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     private let statusLabel: UILabel = {
         let signature = UILabel()
-        signature.text = "Listening to music"
+        signature.text = "Waiting for something..."
         signature.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         signature.textColor = .gray
         signature.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +63,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         textField.textColor = .black
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "введите новый статус здесь"
+        textField.placeholder = "Set your status.."
         textField.keyboardType = UIKeyboardType.default
         textField.returnKeyType = UIReturnKeyType.done
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -95,7 +95,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             print(buttonText)
         }
     }
- 
+    
     @objc func statusTextChanged(_ textField: UITextField) {
         statusText = textField.text ?? ""
     }
@@ -122,15 +122,16 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             setStatusButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 50),
             setStatusButton.widthAnchor.constraint(equalToConstant: 360),
-            
+            // setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
             
             statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -65),
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -14),
-            statusLabel.rightAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 155),
+            statusLabel.rightAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 165),
             
             statusTextField.heightAnchor.constraint(equalToConstant: 35),
-            statusTextField.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 35),
+            statusTextField.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 10),
             statusTextField.rightAnchor.constraint(equalTo: safeAreaGuide.rightAnchor, constant: -16),
+            
         ])
     }
 }
