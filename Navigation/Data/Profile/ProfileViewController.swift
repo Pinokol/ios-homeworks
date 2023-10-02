@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
     
@@ -23,8 +24,13 @@ class ProfileViewController: UIViewController {
     }()
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .lightGray
+            super.viewDidLoad()
+            #if DEBUG
+            view.backgroundColor = .lightGray
+            #else
+            view.backgroundColor = .purple
+            #endif
+    
         view.addSubview(ProfileViewController.postTableView)
         ProfileViewController.postTableView.dataSource = self
         ProfileViewController.postTableView.delegate = self

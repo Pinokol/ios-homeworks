@@ -7,19 +7,30 @@
 
 import Foundation
 
-struct PostFeed{
-    var title: String
+public struct PostFeed{
+    public var title: String
+    public init(title: String) {
+            self.title = title
+        }
 }
 
-struct Post {
-    let author: String
-    let description: String
-    let image: String
-    let likes: Int
-    let views: Int
+public struct Post {
+    public  let author: String
+    public let description: String
+    public let image: String
+    public let likes: Int
+    public let views: Int
+    
+    public init(author: String, description: String, image: String, likes: Int, views: Int) {
+            self.author = author
+            self.description = description
+            self.image = image
+            self.likes = likes
+            self.views = views
+        }
 }
 
-let postExamples: [Post] = [
+public let postExamples: [Post] = [
     Post(author: "Брюс Ли",
          description: "Пустые карманы никогда не помешают нам стать теми, кем мы хотим быть. Помешать этому могут только пустые сердца.",
          image: "post1",
