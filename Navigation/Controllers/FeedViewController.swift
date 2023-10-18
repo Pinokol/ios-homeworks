@@ -70,7 +70,7 @@ class FeedViewController: UIViewController {
         self.feedButton2.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
-    func setupContraints() {
+   private func setupContraints() {
         _ = view.safeAreaLayoutGuide
     }
     

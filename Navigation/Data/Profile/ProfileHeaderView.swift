@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
     
@@ -81,6 +82,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
         setupUI()
         addTarget()
+        setupConstrain()
         statusTextField.delegate = self
     }
     
@@ -104,7 +106,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         statusText = textField.text ?? ""
     }
     
-    private func setupUI() {
+    func setupUI() {
+        
         addSubview(avatarImageView)
         addSubview(fullNameLabel)
         addSubview(setStatusButton)
@@ -133,33 +136,84 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         avatarBackground.alpha = 0
         
         
-        NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            avatarImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 94),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 94),
-            
-            fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
-            fullNameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            
-            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 46),
-            setStatusButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
-            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
-            setStatusButton.widthAnchor.constraint(equalToConstant: 360),
-            setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
-            
-            statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -65),
-            statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -14),
-            statusLabel.rightAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 165),
-            
-            statusTextField.heightAnchor.constraint(equalToConstant: 35),
-            statusTextField.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 10),
-            statusTextField.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
-            
-            returnAvatarButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            returnAvatarButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
-        ])
+        
+        
     }
+    
+    private func setupConstrain(){
+        
+        avatarImageView.snp.makeConstraints{ make in
+            make.top.equalToSuperview().offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.width.equalTo(94)
+            make.height.equalTo(94)
+        }
+        statusLabel.snp.makeConstraints{ make in
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(50)
+            make.bottom.equalTo(statusTextField.snp.top).offset(-14)
+            make.trailing.equalTo(self.snp.trailing).offset(-16)
+        }
+        
+        fullNameLabel.snp.makeConstraints{ make in
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(50)
+            make.top.equalToSuperview().offset(27)
+            make.trailing.equalTo(self.snp.trailing).offset(-16)
+        }
+        
+        setStatusButton.snp.makeConstraints{ make in
+            make.top.equalTo(avatarImageView.snp.bottom).offset(46)
+            make.width.equalTo(360)
+            make.leading.equalTo(self.snp.leading).offset(16)
+            make.height.equalTo(50)
+            make.bottom.equalTo(self.snp.bottom).offset(-16)
+        }
+        
+        statusTextField.snp.makeConstraints{ make in
+            make.height.equalTo(40)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(50)
+            make.trailing.equalToSuperview().offset(-16)
+            make.bottom.equalTo(setStatusButton.snp.top).offset(-34)
+        }
+        
+        returnAvatarButton.snp.makeConstraints{ make in
+            make.top.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+        }
+    }
+    
+    /*
+     func setupConstrain(){
+     NSLayoutConstraint.activate([
+     avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+     avatarImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
+     avatarImageView.widthAnchor.constraint(equalToConstant: 94),
+     avatarImageView.heightAnchor.constraint(equalToConstant: 94),
+     
+     fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
+     fullNameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+     
+     setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 46),
+     setStatusButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
+     setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+     setStatusButton.widthAnchor.constraint(equalToConstant: 360),
+     setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
+     
+     statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -65),
+     statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -14),
+     statusLabel.rightAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 165),
+     
+     statusTextField.heightAnchor.constraint(equalToConstant: 35),
+     statusTextField.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 10),
+     statusTextField.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
+     
+     returnAvatarButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+     returnAvatarButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+     ])
+     
+     }
+     */
+    
+    
     
     @objc private func didTapOnAvatar() {
         avatarImageView.isUserInteractionEnabled = false
