@@ -8,9 +8,9 @@
 import UIKit
 
 class CurrentUserService: UserService {
-
-    let currentUser = User(userLogin: "Tigr", userFullName: "Siberian Tigr", userAvatar: UIImage(named: "avatar") ?? UIImage(), userStatus: "Do good")
-
+    
+    let currentUser = User(userLogin: "Tigr", userFullName: "Siberian Tigr", userAvatar: UIImage(named: "ImageTigr") ?? UIImage(), userStatus: "Do good")
+    
     func authorization(userLogin: String) -> User? {
         
         if userLogin == currentUser.userLogin {

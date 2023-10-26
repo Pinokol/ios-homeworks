@@ -8,7 +8,7 @@
 import UIKit
 
 class LogInViewController: UIViewController {
-
+    
     private var vkLogo: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "logo")
@@ -51,7 +51,7 @@ class LogInViewController: UIViewController {
             button.setBackgroundImage(pixel.image(alpha: 0.6), for: .highlighted)
             button.setBackgroundImage(pixel.image(alpha: 0.4), for: .disabled)
         }
-
+        
         button.setTitle("Log In", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.addTarget(nil, action: #selector(touchLoginButton), for: .touchUpInside)
@@ -122,80 +122,80 @@ class LogInViewController: UIViewController {
         let nc = NotificationCenter.default
         nc.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-
+        
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-
+            
             loginScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             loginScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             loginScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             loginScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-
+            
             contentView.topAnchor.constraint(equalTo: loginScrollView.topAnchor),
             contentView.trailingAnchor.constraint(equalTo: loginScrollView.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: loginScrollView.bottomAnchor),
             contentView.leadingAnchor.constraint(equalTo: loginScrollView.leadingAnchor),
             contentView.centerXAnchor.constraint(equalTo: loginScrollView.centerXAnchor),
             contentView.centerYAnchor.constraint(equalTo: loginScrollView.centerYAnchor),
-
+            
             vkLogo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
             vkLogo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             vkLogo.heightAnchor.constraint(equalToConstant: 100),
             vkLogo.widthAnchor.constraint(equalToConstant: 100),
-
+            
             loginStackView.topAnchor.constraint(equalTo: vkLogo.bottomAnchor, constant: 120),
             loginStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             loginStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             loginStackView.heightAnchor.constraint(equalToConstant: 100),
-
+            
             loginButton.topAnchor.constraint(equalTo: loginStackView.bottomAnchor, constant: 16),
             loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             loginButton.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
-
+    
     @objc private func touchLoginButton() {
-           let typedLogin = loginField.text ?? ""
-           
-           #if DEBUG
-               let userService = TestUserService()
-               if userService.authorization(userLogin: typedLogin) == nil {
-       
-                   let alertController = UIAlertController(title: "Тестовое предупреждение", message: "Неправильно введен логин, введите test ", preferredStyle: .alert)
-                   let actionAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
-                   alertController.addAction(actionAlert)
-                   self.present(alertController, animated: true)
-       
-               } else {
-                   let profileViewController = ProfileViewController(userService: userService.authorization(userLogin: typedLogin))
-                   navigationController?.pushViewController(profileViewController, animated: true)
-               }
-           #else
-               let userService = CurrentUserService()
-                   if userService.authorization(userLogin: typedLogin) == nil {
-               
-                       let alertController = UIAlertController(title: "Предупреждение", message: "Неправильно введен логин", preferredStyle: .alert)
-                       let actionAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
-                       alertController.addAction(actionAlert)
-                       self.present(alertController, animated: true)
-               
-                   } else {
-                       let profileViewController = ProfileViewController(userService: userService.authorization(userLogin: typedLogin))
-                       navigationController?.pushViewController(profileViewController, animated: true)
-           }
-           #endif
-       }
-
+        let typedLogin = loginField.text ?? ""
+        
+#if DEBUG
+        let userService = TestUserService()
+        if userService.authorization(userLogin: typedLogin) == nil {
+            
+            let alertController = UIAlertController(title: "Тестовое предупреждение", message: "Неправильно введен логин, введите test ", preferredStyle: .alert)
+            let actionAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
+            alertController.addAction(actionAlert)
+            self.present(alertController, animated: true)
+            
+        } else {
+            let profileViewController = ProfileViewController(userService: userService.authorization(userLogin: typedLogin))
+            navigationController?.pushViewController(profileViewController, animated: true)
+        }
+#else
+        let userService = CurrentUserService()
+        if userService.authorization(userLogin: typedLogin) == nil {
+            
+            let alertController = UIAlertController(title: "Предупреждение", message: "Неправильно введен логин", preferredStyle: .alert)
+            let actionAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
+            alertController.addAction(actionAlert)
+            self.present(alertController, animated: true)
+            
+        } else {
+            let profileViewController = ProfileViewController(userService: userService.authorization(userLogin: typedLogin))
+            navigationController?.pushViewController(profileViewController, animated: true)
+        }
+#endif
+    }
+    
     @objc private func keyboardShow(notification: NSNotification) {
         if let height = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {
             loginScrollView.contentOffset.y = height - (loginScrollView.frame.height - loginButton.frame.minY)
             loginScrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         }
     }
-
+    
     @objc private func keyboardHide(notification: NSNotification) {
         loginScrollView.contentOffset = CGPoint(x: 0, y: 0)
     }

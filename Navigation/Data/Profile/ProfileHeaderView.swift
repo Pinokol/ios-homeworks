@@ -105,6 +105,19 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }
     
     private func setupUI() {
+        
+#if DEBUG
+        let userService = TestUserService()
+        avatarImageView.image = userService.testUser.userAvatar
+        fullNameLabel.text = userService.testUser.userFullName
+        statusLabel.text = userService.testUser.userStatus
+#else
+        let userService = CurrentUserService()
+        avatarImageView.image = userService.currentUser.userAvatar
+        fullNameLabel.text = userService.currentUser.userFullName
+        statusLabel.text = userService.currentUser.userStatus
+#endif
+        
         addSubview(avatarImageView)
         addSubview(fullNameLabel)
         addSubview(setStatusButton)

@@ -26,22 +26,22 @@ class ProfileViewController: UIViewController {
     }()
     
     init(userService: User?) {
-            self.currentUser = userService
-            super.init(nibName: nil, bundle: nil)
-        }
+        self.currentUser = userService
+        super.init(nibName: nil, bundle: nil)
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
-            super.viewDidLoad()
-            #if DEBUG
-            view.backgroundColor = .lightGray
-            #else
-            view.backgroundColor = .purple
-            #endif
-    
+        super.viewDidLoad()
+#if DEBUG
+        view.backgroundColor = .lightGray
+#else
+        view.backgroundColor = .purple
+#endif
+        
         view.addSubview(ProfileViewController.postTableView)
         ProfileViewController.postTableView.dataSource = self
         ProfileViewController.postTableView.delegate = self
@@ -96,6 +96,7 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section == 0 else { return nil }
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: Self.headerIdent) as! ProfileHeaderView
+        
         return headerView
     }
     
