@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 class PhotosViewController: UIViewController {
     
     let photoIdent = "photoCell"
+    private var imagePublisherFacade = ImagePublisherFacade()
+    private var collectionImages: [UIImage] = []
     
     lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -38,12 +41,22 @@ class PhotosViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
+        imagePublisherFacade.subscribe(self)
+        self.receive(images: collectionImages)
+        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 50, userImages: Photos.shared.examples)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.isHidden = true
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        imagePublisherFacade.removeSubscription(for: self)
+        imagePublisherFacade.rechargeImageLibrary()
+    }
+    
     
     private func setupUI(){
         self.title = "Photo Gallery"
@@ -80,12 +93,22 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 extension PhotosViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Photos.shared.examples.count
+      //  return Photos.shared.examples.count
+        return collectionImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: photoIdent, for: indexPath) as? PhotosCollectionViewCell else { return UICollectionViewCell()}
-        cell.update(model: Photos.shared.examples[indexPath.item])
+       // cell.update(model: Photos.shared.examples[indexPath.item])
+        cell.update(model: collectionImages[indexPath.item])
         return cell
     }
 }
+
+    extension PhotosViewController: ImageLibrarySubscriber {
+        func receive(images: [UIImage]) {
+            self.collectionImages = images
+            photosCollectionView.reloadData()
+        }
+    }
+

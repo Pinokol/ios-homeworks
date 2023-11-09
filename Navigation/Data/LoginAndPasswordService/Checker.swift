@@ -10,7 +10,7 @@ import Foundation
 final class Checker {
     
     static let shared = Checker()
-    // correctLogin совпадает с CurrentUserService userLogin
+    // correctLogin совпадает с CurrentUserService userLogin, свойство .text в UITextField установлены по дефолту их корректные значения
     private let correctLogin: String = "Tigr"
     private let correctPassword: String = "qwerty"
     
