@@ -80,6 +80,7 @@ final class LogInViewController: UIViewController {
         login.font = UIFont.systemFont(ofSize: 16)
         login.autocapitalizationType = .none
         login.returnKeyType = .done
+        login.text = "Tigr"
         return login
     }()
     
@@ -96,6 +97,7 @@ final class LogInViewController: UIViewController {
         password.font = UIFont.systemFont(ofSize: 16)
         password.autocapitalizationType = .none
         password.returnKeyType = .done
+        password.text = "qwerty"
         return password
     }()
     

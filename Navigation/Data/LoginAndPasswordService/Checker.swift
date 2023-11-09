@@ -17,7 +17,7 @@ final class Checker {
     private init() {}
     
     func check(inputLogin: String, inputPassword: String) -> Bool {
-        let isCorrectLoginAndPassword = correctLogin == inputLogin && correctPassword == inputPassword
-        return isCorrectLoginAndPassword
+        correctLogin == inputLogin && correctPassword == inputPassword
+        
     }
 }
