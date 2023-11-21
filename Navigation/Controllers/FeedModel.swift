@@ -11,7 +11,6 @@ class FeedModel {
     
     private var secretWord = "Amur"
     let notificationCenter = NotificationCenter.default
-    static let shared = FeedModel()
     
     init() {}
     
@@ -22,17 +21,11 @@ class FeedModel {
         }
     
     func check(inputSecretWord word: String) {
-        
-        var notification = Notification(name: NSNotification.Name(rawValue: "Clear notification"), object: nil, userInfo: nil)
-        
-        if word == secretWord {
-            notification.name = NSNotification.Name(rawValue: "Word is correct")
-        } else {
-            notification.name = NSNotification.Name(rawValue: "Word is not correct")
+            let message = "Word is " + (word == secretWord ? "correct" : "not correct")
+            let name = NSNotification.Name(rawValue: message)
+            let notification = Notification(name: name, object: nil, userInfo: nil)
+            notificationCenter.post(notification)
         }
-        
-        notificationCenter.post(notification)
-    }
     
     func returnCorrectSecretWord() -> String{
         return secretWord

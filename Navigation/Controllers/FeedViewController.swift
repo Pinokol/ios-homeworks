@@ -48,7 +48,7 @@ final class FeedViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 20, weight: .regular)
         textField.textColor = .systemBlue
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Введите секретное слово: \(FeedModel.shared.returnCorrectSecretWord())"
+        textField.placeholder = "Введите секретное слово: \(viewModel.returnCorrectSecretWord())"
         textField.textAlignment = .center
         textField.keyboardType = UIKeyboardType.default
         textField.returnKeyType = UIReturnKeyType.done
