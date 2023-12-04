@@ -7,10 +7,13 @@
 
 import UIKit
 
-class CurrentUserService: UserService {
+final class CurrentUserService: UserService {
+    
     let currentUser = User(userLogin: "Tigr", userFullName: "Siberian Tigr", userAvatar: UIImage(named: "ImageTigr") ?? UIImage(), userStatus: "Do good")
     
-    func authorization(userLogin: String) -> User? {
-        userLogin == currentUser.userLogin ? currentUser : nil
+    func authorization() -> User? {
+        
+        return currentUser
     }
 }
+

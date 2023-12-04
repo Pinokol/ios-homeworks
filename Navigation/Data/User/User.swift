@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class User {
+final public class User {
     var userLogin: String
     var userFullName: String
     var userAvatar: UIImage
@@ -22,5 +22,6 @@ public class User {
 }
 
 protocol UserService {
-    func authorization(userLogin: String) -> User?
+    
+    func authorization() -> User?
 }

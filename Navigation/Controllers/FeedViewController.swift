@@ -7,7 +7,24 @@ import StorageService
 final class FeedViewController: UIViewController {
     
     var post = PostFeed(title: "Мой пост")
-    var viewModel = FeedModel()
+    //к дз MVVM
+    //    var viewModel = FeedModel()
+    let feedModel: FeedViewModelProtocol
+    let coordinator: FeedCoordinator
+    
+    private lazy var buttonAction: (() -> Void) = {
+        self.coordinator.presentPost(navigationController: self.navigationController, title: self.post.title)
+    }
+    
+    init(coordinator: FeedCoordinator) {
+        self.feedModel = FeedViewModel()
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private lazy var feedScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -20,20 +37,19 @@ final class FeedViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    private lazy var stackView: UIStackView = { [unowned self] in
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.clipsToBounds = true
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 25.0
         
-        private lazy var stackView: UIStackView = { [unowned self] in
-            let stackView = UIStackView()
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            stackView.clipsToBounds = true
-            stackView.axis = .vertical
-            stackView.distribution = .fillEqually
-            stackView.spacing = 25.0
-
-        //    Реализация через СustomButton
-        var feedButton1 = CustomButton(titleText: "Первый пост", titleColor: .white, backgroundColor: .systemBlue, tapAction: self.onTapShowNextView)
+        var feedButton1 = CustomButton(titleText: "Первый пост", titleColor: .white, backgroundColor: .systemBlue, tapAction: buttonAction)
         stackView.addArrangedSubview(feedButton1)
         
-        var feedButton2 = CustomButton(titleText: "Второй пост", titleColor: .white, backgroundColor: .systemGreen, tapAction: self.onTapShowNextView)
+        var feedButton2 = CustomButton(titleText: "Второй пост", titleColor: .white, backgroundColor: .systemGreen, tapAction: buttonAction)
         stackView.addArrangedSubview(feedButton2)
         
         return stackView
@@ -48,7 +64,8 @@ final class FeedViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 20, weight: .regular)
         textField.textColor = .systemBlue
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Введите секретное слово: \(viewModel.returnCorrectSecretWord())"
+        // textField.placeholder = "Введите секретное слово: \(viewModel.returnCorrectSecretWord())"
+        textField.placeholder = "Введите секретное слово: \(feedModel.returnCorrectSecretWord())"
         textField.textAlignment = .center
         textField.keyboardType = UIKeyboardType.default
         textField.returnKeyType = UIReturnKeyType.done
@@ -112,17 +129,11 @@ final class FeedViewController: UIViewController {
         nc.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    // через СustomButton
-    private func onTapShowNextView () {
-        let postViewController = PostViewController(post: post)
-        navigationController?.pushViewController(postViewController, animated: true)
-    }
-    
     private func actionSetStatusButtonPressed() {
         checkSecretWordTextField.endEditing(true)
         
         if checkSecretWordTextField.text != nil && checkSecretWordTextField.text?.count != 0 {
-            viewModel.check(inputSecretWord: checkSecretWordTextField.text ?? "")
+            feedModel.check(inputSecretWord: checkSecretWordTextField.text ?? "")
         }
     }
     
@@ -163,41 +174,41 @@ final class FeedViewController: UIViewController {
     }
     
     private func setupContraints() {
-         let safeAreaLayoutGuide = view.safeAreaLayoutGuide
-         NSLayoutConstraint.activate([
-             feedScrollView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-             feedScrollView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-             feedScrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-             feedScrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-             
-             contentView.topAnchor.constraint(equalTo: feedScrollView.topAnchor),
-             contentView.trailingAnchor.constraint(equalTo: feedScrollView.trailingAnchor),
-             contentView.bottomAnchor.constraint(equalTo: feedScrollView.bottomAnchor),
-             contentView.leadingAnchor.constraint(equalTo: feedScrollView.leadingAnchor),
-             contentView.centerXAnchor.constraint(equalTo: feedScrollView.centerXAnchor),
-             contentView.centerYAnchor.constraint(equalTo: feedScrollView.centerYAnchor),
-             
-             stackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-             stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: -80),
-             stackView.heightAnchor.constraint(equalToConstant: 180),
-             stackView.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, constant: -32),
-             
-             checkSecretWordTextField.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
-             checkSecretWordTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-             checkSecretWordTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-             checkSecretWordTextField.heightAnchor.constraint(equalToConstant: 50),
-             
-             checkGuessButton.topAnchor.constraint(equalTo: checkSecretWordTextField.bottomAnchor, constant: 20),
-             checkGuessButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-             checkGuessButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-             checkGuessButton.heightAnchor.constraint(equalToConstant: 50),
-             
-             resultLabelOfSecretWord.topAnchor.constraint(equalTo: checkGuessButton.bottomAnchor, constant: 20),
-             resultLabelOfSecretWord.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-             resultLabelOfSecretWord.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-             resultLabelOfSecretWord.heightAnchor.constraint(equalToConstant: 50),
-         ])
-     }
+        let safeAreaLayoutGuide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            feedScrollView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            feedScrollView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            feedScrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            feedScrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: feedScrollView.topAnchor),
+            contentView.trailingAnchor.constraint(equalTo: feedScrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: feedScrollView.bottomAnchor),
+            contentView.leadingAnchor.constraint(equalTo: feedScrollView.leadingAnchor),
+            contentView.centerXAnchor.constraint(equalTo: feedScrollView.centerXAnchor),
+            contentView.centerYAnchor.constraint(equalTo: feedScrollView.centerYAnchor),
+            
+            stackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: -80),
+            stackView.heightAnchor.constraint(equalToConstant: 180),
+            stackView.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, constant: -32),
+            
+            checkSecretWordTextField.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
+            checkSecretWordTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            checkSecretWordTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            checkSecretWordTextField.heightAnchor.constraint(equalToConstant: 50),
+            
+            checkGuessButton.topAnchor.constraint(equalTo: checkSecretWordTextField.bottomAnchor, constant: 20),
+            checkGuessButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            checkGuessButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            checkGuessButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            resultLabelOfSecretWord.topAnchor.constraint(equalTo: checkGuessButton.bottomAnchor, constant: 20),
+            resultLabelOfSecretWord.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            resultLabelOfSecretWord.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            resultLabelOfSecretWord.heightAnchor.constraint(equalToConstant: 50),
+        ])
+    }
 }
 
 extension FeedViewController: UITextFieldDelegate {

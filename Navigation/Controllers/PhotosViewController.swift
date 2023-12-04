@@ -93,22 +93,20 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 extension PhotosViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-      //  return Photos.shared.examples.count
         return collectionImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: photoIdent, for: indexPath) as? PhotosCollectionViewCell else { return UICollectionViewCell()}
-       // cell.update(model: Photos.shared.examples[indexPath.item])
         cell.update(model: collectionImages[indexPath.item])
         return cell
     }
 }
 
-    extension PhotosViewController: ImageLibrarySubscriber {
-        func receive(images: [UIImage]) {
-            self.collectionImages = images
-            photosCollectionView.reloadData()
-        }
+extension PhotosViewController: ImageLibrarySubscriber {
+    func receive(images: [UIImage]) {
+        self.collectionImages = images
+        photosCollectionView.reloadData()
     }
+}
 

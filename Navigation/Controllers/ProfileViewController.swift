@@ -8,13 +8,14 @@
 import UIKit
 import StorageService
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     
     static let headerIdent = "header"
     static let postIdent = "post"
     static let photoIdent = "photo"
     
     private var currentUser: User?
+    let coordinator: ProfileCoordinator
     
     static var postTableView: UITableView = {
         let tableView = UITableView.init(frame: .zero,style: .grouped)
@@ -25,8 +26,9 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
     
-    init(userService: User?) {
+    init(userService: User?, coordinator: ProfileCoordinator) {
         self.currentUser = userService
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -104,7 +106,7 @@ extension ProfileViewController: UITableViewDelegate {
         switch indexPath.section {
         case 0:
             tableView.deselectRow(at: indexPath, animated: false)
-            navigationController?.pushViewController(PhotosViewController(), animated: true)
+            coordinator.presentPhoto(navigationController: self.navigationController)
         case 1:
             guard let cell = tableView.cellForRow(at: indexPath) else { return }
             if let post = cell as? PostTableViewCell {

@@ -10,32 +10,43 @@ import UIKit
 enum LoginError: Error {
     case userNotFound
     case wrongPassword
+    case userNotFoundAndWrongPassword
 }
 
 final class LogInViewController: UIViewController {
     
     var loginDelegate: LoginViewControllerDelegate?
+    let coordinator: ProfileCoordinator
     
-    private var vkLogo: UIImageView = {
+    init(coordinator: ProfileCoordinator) {
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private lazy var vkLogo: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "logo")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    private var loginScrollView: UIScrollView = {
+    private lazy var loginScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
     
-    private var contentView: UIView = {
+    private lazy var contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    var loginStackView: UIStackView = {
+    lazy var loginStackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
@@ -48,7 +59,7 @@ final class LogInViewController: UIViewController {
         return stack
     }()
     
-    var loginButton: UIButton = {
+    lazy var loginButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         
@@ -67,7 +78,7 @@ final class LogInViewController: UIViewController {
         return button
     }()
     
-    var loginField: UITextField = {
+    lazy var loginField: UITextField = {
         let login = UITextField()
         login.translatesAutoresizingMaskIntoConstraints = false
         login.placeholder = "Email of phone"
@@ -84,7 +95,7 @@ final class LogInViewController: UIViewController {
         return login
     }()
     
-    var passwordField: UITextField = {
+    lazy var passwordField: UITextField = {
         let password = UITextField()
         password.translatesAutoresizingMaskIntoConstraints = false
         password.leftViewMode = .always
@@ -173,6 +184,8 @@ final class LogInViewController: UIViewController {
             errorMessage = "Неправильно введен логин"
         case .wrongPassword:
             errorMessage = "Неправильно введен пароль"
+        case .userNotFoundAndWrongPassword:
+            errorMessage = "Неправильно введен логин и пароль"
         }
         let alertController = UIAlertController(title: "Предупреждение", message: errorMessage, preferredStyle: .alert)
         let actionAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
@@ -190,16 +203,33 @@ final class LogInViewController: UIViewController {
         let userService = CurrentUserService()
 #endif
         
-        if userService.authorization(userLogin: typedLogin) == nil {
+        if loginDelegate?.checkLoginOnly(inputLogin: typedLogin) == false && loginDelegate?.checkPasswordOnly(inputPassword: typedPassword) == true {
             loginErrorNotification(caseOf: .userNotFound)
-        } else { if loginDelegate?.check(inputLogin: typedLogin, inputPassword: typedPassword) == false {
-            loginErrorNotification(caseOf: .wrongPassword)
         } else {
-            let profileViewController = ProfileViewController(userService: userService.authorization(userLogin: typedLogin))
-            navigationController?.pushViewController(profileViewController, animated: true)
+            if loginDelegate?.checkLoginOnly(inputLogin: typedLogin) == true && loginDelegate?.checkPasswordOnly(inputPassword: typedPassword) == false {
+                loginErrorNotification(caseOf: .wrongPassword)
+            } else {
+                
+                loginDelegate?.check(typedLogin, with: typedPassword) { [self] result in
+                    if result {
+                        coordinator.presentProfile(navigationController: self.navigationController, user: userService.authorization() ?? User(userLogin: "", userFullName: "", userAvatar: UIImage(), userStatus: "") )
+                    } else {
+                        loginErrorNotification(caseOf: .userNotFoundAndWrongPassword)
+                    }
+                    
+                }
+                //без задержки
+                //                   if loginDelegate?.check(inputLogin: typedLogin, inputPassword: typedPassword) == false {
+                //                       loginErrorNotification(caseOf: .userNotFoundAndWrongPassword)
+                //                   } else {
+                //                       coordinator.presentProfile(navigationController: self.navigationController, user: userService.authorization() ?? User(userLogin: "", userFullName: "", userAvatar: UIImage(), userStatus: "") )
+                //                   }
+            }
         }
-        }
+        
     }
+    
+    
     
     @objc private func keyboardShow(notification: NSNotification) {
         if let height = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {

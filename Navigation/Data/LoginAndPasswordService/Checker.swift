@@ -17,7 +17,33 @@ final class Checker {
     private init() {}
     
     func check(inputLogin: String, inputPassword: String) -> Bool {
-        correctLogin == inputLogin && correctPassword == inputPassword
+        let isCorrectLoginAndPassword = correctLogin == inputLogin && correctPassword == inputPassword
+        return isCorrectLoginAndPassword
+    }
+    
+    func check(inputLogin: String, inputPassword: String, handler: @escaping (Bool) -> Void) {
+        let isCorrectLoginAndPassword = correctLogin == inputLogin && correctPassword == inputPassword
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            handler(isCorrectLoginAndPassword)
+        }
+    }
+    
+    func checkLoginOnly(inputLogin: String) -> Bool {
+        let isCorrectLogin = correctLogin == inputLogin
+        return isCorrectLogin
+    }
+    
+    func checkPasswordOnly(inputPassword: String) -> Bool {
+        let isCorrectPassword = correctPassword == inputPassword
+        return isCorrectPassword
+    }
+    
+    func returnCorrectLogin() -> String{
+        return correctLogin
+    }
+    
+    func returnCorrectPassword() -> String{
+        return correctPassword
     }
 }
