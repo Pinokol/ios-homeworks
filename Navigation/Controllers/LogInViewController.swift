@@ -282,12 +282,12 @@ final class LogInViewController: UIViewController {
     }
     
         func convenientNotification (){
-            let alertController = UIAlertController(title: "Внимание", message: "Для Вашего удобства можно установить правильные Логин и Пароль", preferredStyle: .alert)
-                let actionAlertYes = UIAlertAction(title: "Да", style: .default, handler: { action in
+            let alertController = UIAlertController(title: "Внимание", message: "Для Вашего удобства можно установить правильные Login и Password", preferredStyle: .alert)
+                let actionAlertYes = UIAlertAction(title: "Yes", style: .default, handler: { action in
                     self.loginField.text = Checker.shared.returnCorrectLogin()
                     self.passwordField.text = Checker.shared.returnCorrectPassword()
                 })
-                let actionAlertNo = UIAlertAction(title: "Нет", style: .default, handler: nil)
+                let actionAlertNo = UIAlertAction(title: "No", style: .default, handler: nil)
                 alertController.addAction(actionAlertYes)
                 alertController.addAction(actionAlertNo)
                 self.present(alertController, animated: true)
