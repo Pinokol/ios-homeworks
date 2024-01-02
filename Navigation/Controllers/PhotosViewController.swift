@@ -36,7 +36,7 @@ final class PhotosViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
-        filterImage(filter: .crystallize(radius: 10.0))
+        filterImage(filter: .crystallize(radius: 10.0), qos: .default)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "0.0", style: .plain, target: nil, action: nil)
         
     }
@@ -61,7 +61,7 @@ final class PhotosViewController: UIViewController {
         timer = nil
     }
     
-    private func filterImage(filter: ColorFilter) {
+    private func filterImage(filter: ColorFilter, qos: QualityOfService) {
         let timerInterval = 0.01
         var filterDuration = 0.00
         timer = Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true, block: { _ in
@@ -70,7 +70,7 @@ final class PhotosViewController: UIViewController {
             self.navigationItem.rightBarButtonItem?.title = totalTime
         })
         let startDate = Date()
-        imageProcessor.processImagesOnThread(sourceImages: collectionImages, filter: filter, qos: .default) { [weak self] filteredImage in
+        imageProcessor.processImagesOnThread(sourceImages: collectionImages, filter: filter, qos: qos) { [weak self] filteredImage in
             guard let self else { return }
             self.collectionImages = filteredImage.compactMap { UIImage(cgImage: $0!) }
             DispatchQueue.main.sync {
@@ -78,27 +78,6 @@ final class PhotosViewController: UIViewController {
                 self.disableTimer()
                 dump("Process time:  \(Date().timeIntervalSince(startDate)) seconds")
             }
-        }
-    }
-    
-    private func filterImage2(filter: ColorFilter) {
-        let timerInterval = 0.01
-        var filterDuration = 0.00
-        let startDate = Date()
-        timer = Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true, block: { _ in
-            filterDuration += timerInterval
-            _ = Date().timeIntervalSince(startDate)
-            // var totalTime = Date().timeIntervalSince(startDate)
-            self.navigationItem.rightBarButtonItem?.title = String( format: "%.2f sec", filterDuration)
-        })
-        ImageProcessor().processImagesOnThread(sourceImages: collectionImages, filter: .noir, qos: .utility) { [weak self] images in
-            guard let self else { return }
-            self.collectionImages = images.compactMap { $0 }.map { UIImage(cgImage: $0) }
-            DispatchQueue.main.async {
-                self.photosCollectionView.reloadData()
-                self.disableTimer()
-            }
-            print("Process time:  \(Date().timeIntervalSince(startDate)) seconds")
         }
     }
     
@@ -120,7 +99,6 @@ final class PhotosViewController: UIViewController {
             photosCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
-    
 }
 
 extension PhotosViewController: UICollectionViewDelegateFlowLayout {

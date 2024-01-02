@@ -6,6 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 protocol Coordinator {
+    
+    var controller: UIViewController { get set }
+    func setup()
+    
 }

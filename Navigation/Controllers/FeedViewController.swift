@@ -6,19 +6,18 @@ import StorageService
 
 final class FeedViewController: UIViewController {
     
-    var post = PostFeed(title: "Мой пост")
+    var post = PostFeed(title: "Мой новый пост ")
     //к дз MVVM
     //    var viewModel = FeedModel()
     let feedModel: FeedViewModelProtocol
-    let coordinator: FeedCoordinator
+    var coordinator: FeedCoordinator?
     
     private lazy var buttonAction: (() -> Void) = {
-        self.coordinator.presentPost(navigationController: self.navigationController, title: self.post.title)
+        self.coordinator?.present(.post, title: self.post.title)//?.presentPost(navigationController: self.navigationController, title: self.post.title)
     }
     
-    init(coordinator: FeedCoordinator) {
+    init() {
         self.feedModel = FeedViewModel()
-        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -105,6 +104,10 @@ final class FeedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addObrervers()
+        setupObservers()
+    }
+    
+    func setupObservers(){
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -117,16 +120,13 @@ final class FeedViewController: UIViewController {
         view.addSubview(feedScrollView)
         feedScrollView.addSubview(contentView)
         contentView.addSubviews(stackView, checkSecretWordTextField, checkGuessButton, resultLabelOfSecretWord)
-        
         setupContraints()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         removeObservers()
-        let nc = NotificationCenter.default
-        nc.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        nc.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        setupObservers()
     }
     
     private func actionSetStatusButtonPressed() {

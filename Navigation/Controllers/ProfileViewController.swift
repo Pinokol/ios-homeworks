@@ -106,7 +106,7 @@ extension ProfileViewController: UITableViewDelegate {
         switch indexPath.section {
         case 0:
             tableView.deselectRow(at: indexPath, animated: false)
-            coordinator.presentPhoto(navigationController: self.navigationController)
+            coordinator.present(.photo, navigationController: self.navigationController, userService: nil)
         case 1:
             guard let cell = tableView.cellForRow(at: indexPath) else { return }
             if let post = cell as? PostTableViewCell {

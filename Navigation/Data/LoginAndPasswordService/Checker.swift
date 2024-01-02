@@ -12,7 +12,7 @@ final class Checker {
     static let shared = Checker()
     // correctLogin совпадает с CurrentUserService userLogin, свойство .text в UITextField установлены по дефолту их корректные значения
     private let correctLogin: String = "Tigr"
-    private let correctPassword: String = "qwerty"
+    private var correctPassword: String = "qwerty"
     
     private init() {}
     
@@ -45,5 +45,9 @@ final class Checker {
     
     func returnCorrectPassword() -> String{
         return correctPassword
+    }
+    
+    func setNewPassword(newPassword: String){
+        self.correctPassword = newPassword
     }
 }

@@ -7,6 +7,23 @@
 
 import Foundation
 
+protocol LoginViewControllerDelegate: AnyObject {
+    
+    func check(_ inputLogin: String, with inputPassword: String, handler: @escaping (Bool) -> Void)
+    //без задержки
+    // func check(inputLogin: String, inputPassword: String) -> Bool
+    
+    func checkLoginOnly(inputLogin: String) -> Bool
+    
+    func checkPasswordOnly(inputPassword: String) -> Bool
+    
+    func passwordSelection()
+}
+
+protocol LoginFactory {
+    func makeLoginInspector() -> LoginInspector
+}
+
 class LoginInspector: LoginViewControllerDelegate {
     
     func checkLoginOnly(inputLogin: String) -> Bool {
@@ -28,6 +45,21 @@ class LoginInspector: LoginViewControllerDelegate {
             handler(result)
         }
     }
+    
+    private func randomPassword() -> String {
+        let allowedCharacters:[String] = String().printable.map { String($0) }
+        let randomInt = Int.random(in: 3..<6)
+        var passWord = ""
+        for _ in 0 ..< randomInt {
+            guard let samSymbols = allowedCharacters.randomElement() else {return ""}
+            passWord.append(samSymbols)
+        }
+        return passWord
+    }
+    
+    func passwordSelection(){
+        Checker.shared.setNewPassword(newPassword: randomPassword())
+    }
 }
 
 struct MyLogInFactory: LoginFactory {
@@ -37,21 +69,6 @@ struct MyLogInFactory: LoginFactory {
     func makeLoginInspector() -> LoginInspector {
         return inspector
     }
-    
-    
 }
 
-protocol LoginViewControllerDelegate: AnyObject {
-    
-    func check(_ inputLogin: String, with inputPassword: String, handler: @escaping (Bool) -> Void)
-    //без задержки
-    // func check(inputLogin: String, inputPassword: String) -> Bool
-    
-    func checkLoginOnly(inputLogin: String) -> Bool
-    
-    func checkPasswordOnly(inputPassword: String) -> Bool
-}
 
-protocol LoginFactory {
-    func makeLoginInspector() -> LoginInspector
-}
