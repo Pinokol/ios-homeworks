@@ -256,7 +256,6 @@ final class LogInViewController: UIViewController {
                 //                   }
             }
         }
-        
     }
     
     private func hackThePassword() {
