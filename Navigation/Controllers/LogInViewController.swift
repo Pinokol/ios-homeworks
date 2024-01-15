@@ -199,17 +199,7 @@ final class LogInViewController: UIViewController {
     }
     
     private func loginErrorNotification(caseOf error: LoginError) {
-        var errorMessage: String
-        switch error {
-        case .userNotFound:
-            errorMessage = "Неправильно введен логин"
-        case .wrongPassword:
-            errorMessage = "Неправильно введен пароль"
-        case .userNotFoundAndWrongPassword:
-            errorMessage = "Неправильно введен логин и пароль"
-        case .tooStrongPassword:
-            errorMessage = "Пароль слижком сложный и долго подбирать"
-        }
+        let errorMessage = error.rawValue
         let alertController = UIAlertController(title: "Предупреждение", message: errorMessage, preferredStyle: .alert)
         let actionAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
         alertController.addAction(actionAlert)
@@ -229,12 +219,9 @@ final class LogInViewController: UIViewController {
         do {
             let _ = try loginDelegate?.check(inputLogin: typedLogin, inputPassword: typedPassword)
             coordinator?.present(.profile, navigationController: self.navigationController, userService: userService.authorization())
-        } catch LoginError.userNotFound {
-            loginErrorNotification(caseOf: .userNotFound)
-        } catch LoginError.wrongPassword {
-            loginErrorNotification(caseOf: .wrongPassword)
-        } catch LoginError.userNotFoundAndWrongPassword {
-            loginErrorNotification(caseOf: .userNotFoundAndWrongPassword)
+            
+        } catch let error as LoginError {
+            loginErrorNotification(caseOf: error)
         } catch {
             print("some error")
         }

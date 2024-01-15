@@ -71,8 +71,7 @@ final class PhotosViewController: UIViewController {
         })
         let startDate = Date()
         imageProcessor.processImagesOnThread(sourceImages: collectionImages, filter: filter, qos: qos) { [weak self] filteredImage in
-            guard let self else { preconditionFailure("Фильтр не сработал") }
-            
+            guard let self else { assertionFailure ("Фильтр не сработал"); return }
             let images = filteredImage.compactMap {
                 guard let img = $0 else { return UIImage() }
                 return UIImage(cgImage: img)

@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum LoginError: Error {
-    case userNotFound
-    case wrongPassword
+enum LoginError: String, Error {
+    case userNotFound = "Неправильно введен логин"
+    case wrongPassword // by default equal "wrongPassword"
     case userNotFoundAndWrongPassword
     case tooStrongPassword
 }
