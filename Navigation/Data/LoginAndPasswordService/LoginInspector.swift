@@ -59,7 +59,6 @@ class LoginInspector: LoginViewControllerDelegate {
         }
     }
     
-    
     private func randomPassword() -> String {
         let allowedCharacters:[String] = String().printable.map { String($0) }
         let randomInt = Int.random(in: 3..<6)

@@ -110,7 +110,9 @@ final class PhotosViewController: UIViewController {
 
 extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         let countItem: CGFloat = 3
         let accessibleWidth = collectionView.frame.width - 32
         let widthItem = (accessibleWidth / countItem)

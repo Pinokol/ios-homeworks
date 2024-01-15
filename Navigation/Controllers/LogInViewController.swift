@@ -289,7 +289,6 @@ final class LogInViewController: UIViewController {
         self.present(alertController, animated: true)
     }
     
-    
     @objc private func keyboardShow(notification: NSNotification) {
         if let height = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {
             loginScrollView.contentOffset.y = height - (loginScrollView.frame.height - loginButton.frame.minY)
@@ -300,7 +299,6 @@ final class LogInViewController: UIViewController {
     @objc private func keyboardHide(notification: NSNotification) {
         loginScrollView.contentOffset = CGPoint(x: 0, y: 0)
     }
-    
 }
 
 extension LogInViewController: UITextFieldDelegate {

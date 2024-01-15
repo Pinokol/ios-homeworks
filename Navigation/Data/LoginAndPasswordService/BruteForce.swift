@@ -42,7 +42,6 @@ final class BruteForce {
         return password
     }
     
-    
     private func indexOf(character: Character, _ array: [String]) -> Int {
         return array.firstIndex(of: String(character))!
     }
