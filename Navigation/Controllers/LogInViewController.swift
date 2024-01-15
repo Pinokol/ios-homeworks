@@ -7,13 +7,6 @@
 
 import UIKit
 
-enum LoginError: Error {
-    case userNotFound
-    case wrongPassword
-    case userNotFoundAndWrongPassword
-    case tooStrongPassword
-}
-
 final class LogInViewController: UIViewController {
     
     var loginDelegate: LoginViewControllerDelegate?
@@ -233,28 +226,17 @@ final class LogInViewController: UIViewController {
         let userService = CurrentUserService()
 #endif
         
-        if loginDelegate?.checkLoginOnly(inputLogin: typedLogin) == false && loginDelegate?.checkPasswordOnly(inputPassword: typedPassword) == true {
+        do {
+            let _ = try loginDelegate?.check(inputLogin: typedLogin, inputPassword: typedPassword)
+            coordinator?.present(.profile, navigationController: self.navigationController, userService: userService.authorization())
+        } catch LoginError.userNotFound {
             loginErrorNotification(caseOf: .userNotFound)
-        } else {
-            if loginDelegate?.checkLoginOnly(inputLogin: typedLogin) == true && loginDelegate?.checkPasswordOnly(inputPassword: typedPassword) == false {
-                loginErrorNotification(caseOf: .wrongPassword)
-            } else {
-                
-                loginDelegate?.check(typedLogin, with: typedPassword) { [self] result in
-                    if result {
-                        coordinator?.present(.profile, navigationController: self.navigationController, userService: userService.authorization())
-                    } else {
-                        loginErrorNotification(caseOf: .userNotFoundAndWrongPassword)
-                    }
-                    
-                }
-                //без задержки
-                //                   if loginDelegate?.check(inputLogin: typedLogin, inputPassword: typedPassword) == false {
-                //                       loginErrorNotification(caseOf: .userNotFoundAndWrongPassword)
-                //                   } else {
-                //                       coordinator.presentProfile(navigationController: self.navigationController, user: userService.authorization() ?? User(userLogin: "", userFullName: "", userAvatar: UIImage(), userStatus: "") )
-                //                   }
-            }
+        } catch LoginError.wrongPassword {
+            loginErrorNotification(caseOf: .wrongPassword)
+        } catch LoginError.userNotFoundAndWrongPassword {
+            loginErrorNotification(caseOf: .userNotFoundAndWrongPassword)
+        } catch {
+            print("some error")
         }
     }
     
@@ -269,28 +251,43 @@ final class LogInViewController: UIViewController {
         }
         let queue = DispatchQueue(label: "hackThePassword", qos: .background)
         queue.async { [self] in
-            let password = bruteForce.bruteForce(passwordToUnlock: newPassword)
-            DispatchQueue.main.async { [self] in
-                passwordField.text = password
-                passwordField.isSecureTextEntry = false
-                activityIndicator.stopAnimating()
-                passwordHackingButton.isEnabled = true
+            
+            let _ = bruteForce.bruteForce(passwordToUnlock: newPassword) { result in
+                
+                print("🔥 \(result)")
+                
+                switch result {
+                case .success(let forcedPassword):
+                    DispatchQueue.main.async { [self] in
+                        passwordField.text = forcedPassword
+                        passwordField.isSecureTextEntry = false
+                        activityIndicator.stopAnimating()
+                        passwordHackingButton.isEnabled = true
+                    }
+                case .failure(_):
+                    DispatchQueue.main.async { [self] in
+                        loginErrorNotification(caseOf: .tooStrongPassword)
+                        passwordField.text = ""
+                        passwordField.isSecureTextEntry = false
+                        activityIndicator.stopAnimating()
+                        passwordHackingButton.isEnabled = true
+                    }
+                }
             }
         }
-        
     }
     
-        func convenientNotification (){
-            let alertController = UIAlertController(title: "Внимание", message: "Для Вашего удобства можно установить правильные Login и Password", preferredStyle: .alert)
-                let actionAlertYes = UIAlertAction(title: "Yes", style: .default, handler: { action in
-                    self.loginField.text = Checker.shared.returnCorrectLogin()
-                    self.passwordField.text = Checker.shared.returnCorrectPassword()
-                })
-                let actionAlertNo = UIAlertAction(title: "No", style: .default, handler: nil)
-                alertController.addAction(actionAlertYes)
-                alertController.addAction(actionAlertNo)
-                self.present(alertController, animated: true)
-            }
+    func convenientNotification (){
+        let alertController = UIAlertController(title: "Внимание", message: "Для Вашего удобства можно установить правильные Login и Password", preferredStyle: .alert)
+        let actionAlertYes = UIAlertAction(title: "Yes", style: .default, handler: { action in
+            self.loginField.text = Checker.shared.returnCorrectLogin()
+            self.passwordField.text = Checker.shared.returnCorrectPassword()
+        })
+        let actionAlertNo = UIAlertAction(title: "No", style: .default, handler: nil)
+        alertController.addAction(actionAlertYes)
+        alertController.addAction(actionAlertNo)
+        self.present(alertController, animated: true)
+    }
     
     
     @objc private func keyboardShow(notification: NSNotification) {

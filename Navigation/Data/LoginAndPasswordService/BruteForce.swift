@@ -18,6 +18,20 @@ final class BruteForce {
         return isStrongPassword
     }
     
+    func bruteForce(passwordToUnlock: String, completion: @escaping (Result<String, LoginError>) -> Void) {
+        let allowedCharacters: [String] = String().printable.map { String($0) }
+        var password: String = ""
+        if passwordToUnlock.count > 4 {
+            return completion(.failure(LoginError.tooStrongPassword))
+        } else {
+            while password != passwordToUnlock {
+                password = generateBruteForce(password, fromArray: allowedCharacters)
+                
+            }
+            return completion(.success(password))
+        }
+    }
+    
     func bruteForce(passwordToUnlock: String) -> (String){
         let allowedCharacters: [String] = String().printable.map { String($0) }
         var password: String = ""

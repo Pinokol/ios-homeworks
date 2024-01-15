@@ -11,7 +11,7 @@ protocol LoginViewControllerDelegate: AnyObject {
     
     func check(_ inputLogin: String, with inputPassword: String, handler: @escaping (Bool) -> Void)
     //без задержки
-    // func check(inputLogin: String, inputPassword: String) -> Bool
+    func check(inputLogin: String, inputPassword: String) throws -> Bool
     
     func checkLoginOnly(inputLogin: String) -> Bool
     
@@ -34,17 +34,31 @@ class LoginInspector: LoginViewControllerDelegate {
         return Checker.shared.checkPasswordOnly(inputPassword: inputPassword)
     }
     
-    //без задержки
-    //    func check(inputLogin: String, inputPassword: String) -> Bool {
-    //        return Checker.shared.check(inputLogin: inputLogin, inputPassword: inputPassword)
-    //    }
-    
     func check(_ inputLogin: String, with inputPassword: String, handler: @escaping (Bool) -> Void) {
         
         Checker.shared.check(inputLogin: inputLogin, inputPassword: inputPassword) { result in
             handler(result)
         }
     }
+    
+    func check(inputLogin: String, inputPassword: String) throws -> Bool {
+        let isCorrectLogin = Checker.shared.checkLoginOnly(inputLogin: inputLogin)
+        let isCorrectPassword = Checker.shared.checkPasswordOnly(inputPassword: inputPassword)
+        if !isCorrectLogin && !isCorrectPassword {
+            throw LoginError.userNotFoundAndWrongPassword
+        } else {
+            if !isCorrectLogin && isCorrectPassword {
+                throw LoginError.userNotFound
+            } else {
+                if isCorrectLogin && !isCorrectPassword {
+                    throw LoginError.wrongPassword
+                } else{
+                    return isCorrectLogin && isCorrectPassword
+                }
+            }
+        }
+    }
+    
     
     private func randomPassword() -> String {
         let allowedCharacters:[String] = String().printable.map { String($0) }

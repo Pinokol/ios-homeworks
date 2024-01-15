@@ -71,8 +71,15 @@ final class PhotosViewController: UIViewController {
         })
         let startDate = Date()
         imageProcessor.processImagesOnThread(sourceImages: collectionImages, filter: filter, qos: qos) { [weak self] filteredImage in
-            guard let self else { return }
-            self.collectionImages = filteredImage.compactMap { UIImage(cgImage: $0!) }
+            guard let self else { preconditionFailure("Фильтр не сработал") }
+            
+            let images = filteredImage.compactMap {
+                guard let img = $0 else { return UIImage() }
+                return UIImage(cgImage: img)
+            }
+            
+            self.collectionImages = images.filter({ $0 != UIImage() })
+            
             DispatchQueue.main.sync {
                 self.photosCollectionView.reloadData()
                 self.disableTimer()

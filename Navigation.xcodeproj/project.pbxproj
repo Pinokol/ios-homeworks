@@ -32,6 +32,7 @@
 		1C901A3B2B1F5AD90099994B /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 1C901A3A2B1F5AD90099994B /* iOSIntPackage */; };
 		1C901A3D2B3DADD30099994B /* BruteForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C901A3C2B3DADD30099994B /* BruteForce.swift */; };
 		1C901A3F2B44B7100099994B /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C901A3E2B44B7100099994B /* ExtensionString.swift */; };
+		1C901A422B552F650099994B /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C901A402B4EFFD60099994B /* Error.swift */; };
 		1CA946212A97D95500E41A51 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA946202A97D95500E41A51 /* LogInViewController.swift */; };
 		1CA946232A97EC2600E41A51 /* ExtensionUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA946222A97EC2600E41A51 /* ExtensionUIImage.swift */; };
 		1CA946252A97EC6A00E41A51 /* ExtensionUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA946242A97EC6A00E41A51 /* ExtensionUIView.swift */; };
@@ -108,6 +109,7 @@
 		1C901A372B14C8350099994B /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		1C901A3C2B3DADD30099994B /* BruteForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForce.swift; sourceTree = "<group>"; };
 		1C901A3E2B44B7100099994B /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
+		1C901A402B4EFFD60099994B /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		1CA946202A97D95500E41A51 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		1CA946222A97EC2600E41A51 /* ExtensionUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIImage.swift; sourceTree = "<group>"; };
 		1CA946242A97EC6A00E41A51 /* ExtensionUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIView.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				1C901A252AFA41970099994B /* LoginInspector.swift */,
 				1C901A372B14C8350099994B /* Factory.swift */,
 				1C901A3C2B3DADD30099994B /* BruteForce.swift */,
+				1C901A402B4EFFD60099994B /* Error.swift */,
 			);
 			path = LoginAndPasswordService;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				1CD9E4BF2A5F606D00D7C0E4 /* SceneDelegate.swift in Sources */,
 				1C802C242A75A03E00841E9E /* ProfileHeaderView.swift in Sources */,
 				1CA946272A97ECE600E41A51 /* PostTableViewCell.swift in Sources */,
+				1C901A422B552F650099994B /* Error.swift in Sources */,
 				1C901A2D2B0B763D0099994B /* FeedViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
