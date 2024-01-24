@@ -13,3 +13,7 @@ enum LoginError: String, Error {
     case userNotFoundAndWrongPassword
     case tooStrongPassword
 }
+
+enum mediaError: Error {
+    case musicError
+}

@@ -21,7 +21,7 @@ final class MainCoordinator: Coordinator {
     }
     
     func setup() {
-        tabBarVC.viewControllers = [self.createFeed(), createProfile()]
+        tabBarVC.viewControllers = [self.createFeed(), createProfile(), createMedia()]
     }
     
     
@@ -34,4 +34,10 @@ final class MainCoordinator: Coordinator {
         let profileCoordinator = ProfileCoordinator()
         return profileCoordinator.profileNC
     }
+    
+    private func createMedia() -> UINavigationController {
+        let coordinator = MediaCoordinator()
+        return coordinator.mediaNC
+    }
+    
 }
