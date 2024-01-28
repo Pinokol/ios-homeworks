@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = mainCoordinator.controller
         
         let url = AppConfiguration.allCases.randomElement()?.url
-                NetworkService.request(url: url)
+        NetworkService.request(url: url)
         
         window.makeKeyAndVisible()
         self.window = window
