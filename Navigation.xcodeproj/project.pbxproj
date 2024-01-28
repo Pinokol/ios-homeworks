@@ -18,6 +18,7 @@
 		1C1311242ACB0FE00017E06C /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1C13110E2ACB0FDF0017E06C /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1C13112E2ACB42EA0017E06C /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD9E4D82A6E6E4B00D7C0E4 /* PostViewController.swift */; };
 		1C1311352ACB57B60017E06C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD9E4DB2A6E709C00D7C0E4 /* Post.swift */; };
+		1C5D0BC62B65D6FD00E2F879 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D0BC52B65D6FD00E2F879 /* NetworkService.swift */; };
 		1C802C242A75A03E00841E9E /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C802C232A75A03D00841E9E /* ProfileHeaderView.swift */; };
 		1C802C262A75A06800841E9E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C802C252A75A06800841E9E /* ProfileViewController.swift */; };
 		1C901A222AFA3DD20099994B /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C901A212AFA3DD20099994B /* Checker.swift */; };
@@ -109,6 +110,7 @@
 		1C1311112ACB0FDF0017E06C /* StorageService.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = StorageService.docc; sourceTree = "<group>"; };
 		1C1311172ACB0FE00017E06C /* StorageServiceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StorageServiceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C13111E2ACB0FE00017E06C /* StorageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageServiceTests.swift; sourceTree = "<group>"; };
+		1C5D0BC52B65D6FD00E2F879 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		1C802C232A75A03D00841E9E /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		1C802C252A75A06800841E9E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		1C901A212AFA3DD20099994B /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
@@ -213,6 +215,14 @@
 			path = StorageServiceTests;
 			sourceTree = "<group>";
 		};
+		1C5D0BC42B65D67700E2F879 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				1C5D0BC52B65D6FD00E2F879 /* NetworkService.swift */,
+			);
+			name = NetworkService;
+			sourceTree = "<group>";
+		};
 		1C802C222A75A00E00841E9E /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +319,7 @@
 			children = (
 				1CD9E4BC2A5F606D00D7C0E4 /* AppDelegate.swift */,
 				1CD9E4BE2A5F606D00D7C0E4 /* SceneDelegate.swift */,
+				1C5D0BC42B65D67700E2F879 /* NetworkService */,
 				1C901A2E2B14C37D0099994B /* Coordinators */,
 				1CD9E4DD2A6E72FB00D7C0E4 /* Controllers */,
 				1CD9E4DA2A6E707700D7C0E4 /* Data */,
@@ -544,6 +555,7 @@
 				1CD9E4D12A673B2400D7C0E4 /* FeedViewController.swift in Sources */,
 				1C901A342B14C4360099994B /* MainCoordinator.swift in Sources */,
 				1C802C262A75A06800841E9E /* ProfileViewController.swift in Sources */,
+				1C5D0BC62B65D6FD00E2F879 /* NetworkService.swift in Sources */,
 				1C13112E2ACB42EA0017E06C /* PostViewController.swift in Sources */,
 				1CA946292AA9F78700E41A51 /* PhotosTableViewCell.swift in Sources */,
 				1C901A322B14C4030099994B /* FeedCoordinator.swift in Sources */,
