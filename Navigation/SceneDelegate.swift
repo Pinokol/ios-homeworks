@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -25,4 +26,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
         self.window = window
     }
+    
+    func sceneDidDisconnect(_ scene: UIScene) {
+            do {
+                try Auth.auth().signOut()
+            }
+            catch{
+                print(error.localizedDescription)
+            }
+        }
 }
