@@ -189,24 +189,24 @@ final class FeedViewController: UIViewController {
             contentView.centerYAnchor.constraint(equalTo: feedScrollView.centerYAnchor),
             
             stackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: -80),
-            stackView.heightAnchor.constraint(equalToConstant: 180),
-            stackView.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, constant: -32),
+            stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: -.spacing80),
+            stackView.heightAnchor.constraint(equalToConstant: .height180),
+            stackView.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, constant: -.spacing32),
             
-            checkSecretWordTextField.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
-            checkSecretWordTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            checkSecretWordTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            checkSecretWordTextField.heightAnchor.constraint(equalToConstant: 50),
+            checkSecretWordTextField.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: .spacing20),
+            checkSecretWordTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacing16),
+            checkSecretWordTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacing16),
+            checkSecretWordTextField.heightAnchor.constraint(equalToConstant: .height50),
             
-            checkGuessButton.topAnchor.constraint(equalTo: checkSecretWordTextField.bottomAnchor, constant: 20),
-            checkGuessButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            checkGuessButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            checkGuessButton.heightAnchor.constraint(equalToConstant: 50),
+            checkGuessButton.topAnchor.constraint(equalTo: checkSecretWordTextField.bottomAnchor, constant: .spacing20),
+            checkGuessButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacing16),
+            checkGuessButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacing16),
+            checkGuessButton.heightAnchor.constraint(equalToConstant: .height50),
             
-            resultLabelOfSecretWord.topAnchor.constraint(equalTo: checkGuessButton.bottomAnchor, constant: 20),
-            resultLabelOfSecretWord.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            resultLabelOfSecretWord.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            resultLabelOfSecretWord.heightAnchor.constraint(equalToConstant: 50),
+            resultLabelOfSecretWord.topAnchor.constraint(equalTo: checkGuessButton.bottomAnchor, constant: .spacing20),
+            resultLabelOfSecretWord.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacing16),
+            resultLabelOfSecretWord.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacing16),
+            resultLabelOfSecretWord.heightAnchor.constraint(equalToConstant: .height50),
         ])
     }
 }

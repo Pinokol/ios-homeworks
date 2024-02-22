@@ -11,7 +11,7 @@ final class LogInViewController: UIViewController {
     
     var loginDelegate: LoginViewControllerDelegate?
     var coordinator: ProfileCoordinator?
-    let bruteForce = BruteForce()
+   // let bruteForce = BruteForce()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -75,7 +75,8 @@ final class LogInViewController: UIViewController {
     private lazy var loginField: UITextField = {
         let login = UITextField()
         login.translatesAutoresizingMaskIntoConstraints = false
-        login.placeholder = "Email of phone"
+        login.placeholder = "email: test@test.com"
+        //login.placeholder = "Email of phone"
         login.layer.borderColor = UIColor.lightGray.cgColor
         login.layer.borderWidth = 0.25
         login.leftViewMode = .always
@@ -85,8 +86,11 @@ final class LogInViewController: UIViewController {
         login.font = UIFont.systemFont(ofSize: 16)
         login.autocapitalizationType = .none
         login.returnKeyType = .done
-        login.text = "Tigr"
-        login.isSecureTextEntry = true
+//        login.text = "Tigr"
+        login.isSecureTextEntry = false
+        login.addTarget(self, action: #selector(loginOrPasswordChanged), for: .editingChanged)
+       // login.isSecureTextEntry = true
+        
         return login
     }()
     
@@ -94,11 +98,13 @@ final class LogInViewController: UIViewController {
         let password = UITextField()
         password.translatesAutoresizingMaskIntoConstraints = false
         password.leftViewMode = .always
-        password.placeholder = "Password"
+        password.placeholder = "Пароль: 123456"
+        //password.placeholder = "Password"
         password.layer.borderColor = UIColor.lightGray.cgColor
         password.layer.borderWidth = 0.25
         password.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: password.frame.height))
         password.isSecureTextEntry = true
+        password.addTarget(self, action: #selector(loginOrPasswordChanged), for: .editingChanged)
         password.textColor = .black
         password.font = UIFont.systemFont(ofSize: 16)
         password.autocapitalizationType = .none
@@ -107,20 +113,26 @@ final class LogInViewController: UIViewController {
         return password
     }()
     
-    private lazy var passwordHackingButton: CustomButton  = {
-        let button = CustomButton(titleText: "Подобрать пароль", titleColor: .white, backgroundColor: .systemGreen, tapAction: hackThePassword)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+    private lazy var signUpButton: CustomButton = {
+            let button = CustomButton(titleText: "Зарегистрироваться", titleColor: .white,
+                                      backgroundColor: .systemBlue, tapAction: signUpAction)
+            return button
+        }()
     
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView()
-        indicator.hidesWhenStopped = true
-        indicator.style = .large
-        indicator.color = .gray
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        return indicator
-    }()
+//    private lazy var passwordHackingButton: CustomButton  = {
+//        let button = CustomButton(titleText: "Подобрать пароль", titleColor: .white, backgroundColor: .systemGreen, tapAction: hackThePassword)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
+    
+//    private lazy var activityIndicator: UIActivityIndicatorView = {
+//        let indicator = UIActivityIndicatorView()
+//        indicator.hidesWhenStopped = true
+//        indicator.style = .large
+//        indicator.color = .gray
+//        indicator.translatesAutoresizingMaskIntoConstraints = false
+//        return indicator
+//    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -150,10 +162,21 @@ final class LogInViewController: UIViewController {
     private func setupUI(){
         view.addSubview(loginScrollView)
         loginScrollView.addSubview(contentView)
-        contentView.addSubviews(vkLogo, loginStackView, loginButton, passwordHackingButton, activityIndicator)
+        contentView.addSubviews(vkLogo, loginStackView, loginButton, signUpButton)
+        //contentView.addSubviews(vkLogo, loginStackView, loginButton, passwordHackingButton, activityIndicator)
         loginStackView.addArrangedSubview(loginField)
         loginStackView.addArrangedSubview(passwordField)
         convenientNotification()
+        
+        view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.isHidden = true
+        loginField.delegate = self
+        passwordField.delegate = self
+        #if DEBUG
+        loginField.text = "test@test.test"
+        passwordField.text = "123456"
+        loginButton.isEnabled = true
+        #endif
     }
     
     private func setupConstraints() {
@@ -171,30 +194,35 @@ final class LogInViewController: UIViewController {
             contentView.centerXAnchor.constraint(equalTo: loginScrollView.centerXAnchor),
             contentView.centerYAnchor.constraint(equalTo: loginScrollView.centerYAnchor),
             
-            vkLogo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
+            vkLogo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: .spacing120),
             vkLogo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            vkLogo.heightAnchor.constraint(equalToConstant: 100),
-            vkLogo.widthAnchor.constraint(equalToConstant: 100),
+            vkLogo.heightAnchor.constraint(equalToConstant: .height100),
+            vkLogo.widthAnchor.constraint(equalToConstant: .spacing100),
             
-            loginStackView.topAnchor.constraint(equalTo: vkLogo.bottomAnchor, constant: 120),
-            loginStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            loginStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            loginStackView.heightAnchor.constraint(equalToConstant: 100),
+            loginStackView.topAnchor.constraint(equalTo: vkLogo.bottomAnchor, constant: .spacing120),
+            loginStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacing16),
+            loginStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacing16),
+            loginStackView.heightAnchor.constraint(equalToConstant: .height100),
             
-            loginButton.topAnchor.constraint(equalTo: loginStackView.bottomAnchor, constant: 16),
-            loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            loginButton.heightAnchor.constraint(equalToConstant: 50),
+            loginButton.topAnchor.constraint(equalTo: loginStackView.bottomAnchor, constant: .spacing16),
+            loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacing16),
+            loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacing16),
+            loginButton.heightAnchor.constraint(equalToConstant: .height50),
             
-            passwordHackingButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
-            passwordHackingButton.heightAnchor.constraint(equalToConstant: 50),
-            passwordHackingButton.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor),
-            passwordHackingButton.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor),
+//            passwordHackingButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
+//            passwordHackingButton.heightAnchor.constraint(equalToConstant: 50),
+//            passwordHackingButton.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor),
+//            passwordHackingButton.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor),
+//            
+//            activityIndicator.centerYAnchor.constraint(equalTo: passwordHackingButton.centerYAnchor),
+//            activityIndicator.trailingAnchor.constraint(equalTo: passwordHackingButton.trailingAnchor, constant: -16),
+//            activityIndicator.heightAnchor.constraint(equalToConstant: 50),
+//            activityIndicator.widthAnchor.constraint(equalToConstant: 50),
             
-            activityIndicator.centerYAnchor.constraint(equalTo: passwordHackingButton.centerYAnchor),
-            activityIndicator.trailingAnchor.constraint(equalTo: passwordHackingButton.trailingAnchor, constant: -16),
-            activityIndicator.heightAnchor.constraint(equalToConstant: 50),
-            activityIndicator.widthAnchor.constraint(equalToConstant: 50),
+            signUpButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: .spacing16),
+            signUpButton.heightAnchor.constraint(equalToConstant: .height50),
+            signUpButton.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor),
+            signUpButton.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor),
         ])
     }
     
@@ -206,74 +234,107 @@ final class LogInViewController: UIViewController {
         self.present(alertController, animated: true)
     }
     
-    @objc private func touchLoginButton() {
-        let typedLogin = loginField.text ?? ""
-        let typedPassword = passwordField.text ?? ""
-        
-#if DEBUG
-        let userService = TestUserService()
-#else
-        let userService = CurrentUserService()
-#endif
-        
-        do {
-            let _ = try loginDelegate?.check(inputLogin: typedLogin, inputPassword: typedPassword)
-            coordinator?.present(.profile, navigationController: self.navigationController, userService: userService.authorization())
-            
-        } catch let error as LoginError {
-            loginErrorNotification(caseOf: error)
-        } catch {
-            print("some error")
-        }
-    }
+//    @objc private func touchLoginButton() {
+//        let typedLogin = loginField.text ?? ""
+//        let typedPassword = passwordField.text ?? ""
+//        
+//#if DEBUG
+//        let userService = TestUserService()
+//#else
+//        let userService = CurrentUserService()
+//#endif
+//        
+//        do {
+//            let _ = try loginDelegate?.check(inputLogin: typedLogin, inputPassword: typedPassword)
+//            coordinator?.present(.profile, navigationController: self.navigationController, userService: userService.authorization())
+//            
+//        } catch let error as LoginError {
+//            loginErrorNotification(caseOf: error)
+//        } catch {
+//            print("some error")
+//        }
+//    }
     
-    private func hackThePassword() {
-        activityIndicator.startAnimating()
-        loginDelegate?.passwordSelection()
-        print(Checker.shared.returnCorrectPassword())
-        passwordHackingButton.isEnabled = false
-        let newPassword = Checker.shared.returnCorrectPassword()
-        if bruteForce.isStrongPassword(passwordToUnlock: newPassword) {
-            loginErrorNotification(caseOf: .tooStrongPassword)
+    @objc private func touchLoginButton() {
+           Task{
+               do {
+                   let currentUser = try await loginDelegate?.checkCredentials(email: loginField.text ?? "", password: passwordField.text ?? "")
+                   coordinator?.present(ProfileCoordinator.Presentation.profile, navigationController: navigationController, userService: currentUser)
+                 //  coordinator.presentProfile(navigationController: navigationController, user: currentUser)
+               } catch {
+                   loginErrorNotification(caseOf: .wrongPassword)
+               }
+           }
+       }
+     
+       @objc private func signUpAction() {
+           Task{
+               do{
+                   _ = try await loginDelegate?.SignUp(email: loginField.text ?? "", password: passwordField.text ?? "")
+                   loginErrorNotification(caseOf: .authorized)
+               } catch{
+                   loginErrorNotification(caseOf: .suchUserAlreadyExists)
+               }
+           }
+       }
+    
+//    private func hackThePassword() {
+//        activityIndicator.startAnimating()
+//        loginDelegate?.passwordSelection()
+//        print(Checker.shared.returnCorrectPassword())
+//        passwordHackingButton.isEnabled = false
+//        let newPassword = Checker.shared.returnCorrectPassword()
+//        if bruteForce.isStrongPassword(passwordToUnlock: newPassword) {
+//            loginErrorNotification(caseOf: .tooStrongPassword)
+//        }
+//        let queue = DispatchQueue(label: "hackThePassword", qos: .background)
+//        queue.async { [self] in
+//            
+//            let _ = bruteForce.bruteForce(passwordToUnlock: newPassword) { result in
+//                
+//                print("🔥 \(result)")
+//                
+//                switch result {
+//                case .success(let forcedPassword):
+//                    DispatchQueue.main.async { [self] in
+//                        passwordField.text = forcedPassword
+//                        passwordField.isSecureTextEntry = false
+//                        activityIndicator.stopAnimating()
+//                        passwordHackingButton.isEnabled = true
+//                    }
+//                case .failure(_):
+//                    DispatchQueue.main.async { [self] in
+//                        loginErrorNotification(caseOf: .tooStrongPassword)
+//                        passwordField.text = ""
+//                        passwordField.isSecureTextEntry = false
+//                        activityIndicator.stopAnimating()
+//                        passwordHackingButton.isEnabled = true
+//                    }
+//                }
+//            }
+//        }
+//    }
+    @objc func loginOrPasswordChanged() {
+            guard let resultLogin = loginDelegate?.isValidEmail(loginField.text ?? "") else {return}
+            let resultPassword = passwordField.text ?? ""
+            self.loginButton.isEnabled = resultLogin && resultPassword.count > 5
         }
-        let queue = DispatchQueue(label: "hackThePassword", qos: .background)
-        queue.async { [self] in
-            
-            let _ = bruteForce.bruteForce(passwordToUnlock: newPassword) { result in
-                
-                print("🔥 \(result)")
-                
-                switch result {
-                case .success(let forcedPassword):
-                    DispatchQueue.main.async { [self] in
-                        passwordField.text = forcedPassword
-                        passwordField.isSecureTextEntry = false
-                        activityIndicator.stopAnimating()
-                        passwordHackingButton.isEnabled = true
-                    }
-                case .failure(_):
-                    DispatchQueue.main.async { [self] in
-                        loginErrorNotification(caseOf: .tooStrongPassword)
-                        passwordField.text = ""
-                        passwordField.isSecureTextEntry = false
-                        activityIndicator.stopAnimating()
-                        passwordHackingButton.isEnabled = true
-                    }
-                }
-            }
-        }
-    }
     
     func convenientNotification (){
-        let alertController = UIAlertController(title: "Внимание", message: "Для Вашего удобства можно установить правильные Login и Password", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Внимание", 
+                                                message: "Для Вашего удобства можно установить правильные Login и Password",
+                                                preferredStyle: .alert)
         let actionAlertYes = UIAlertAction(title: "Yes", style: .default, handler: { action in
-            self.loginField.text = Checker.shared.returnCorrectLogin()
-            self.passwordField.text = Checker.shared.returnCorrectPassword()
+//            self.loginField.text = Checker.shared.returnCorrectLogin()
+//            self.passwordField.text = Checker.shared.returnCorrectPassword()
+            self.loginField.text = "test@test.test"
+            self.passwordField.text = "123456"
         })
         let actionAlertNo = UIAlertAction(title: "No", style: .default, handler: nil)
         alertController.addAction(actionAlertYes)
         alertController.addAction(actionAlertNo)
         self.present(alertController, animated: true)
+        loginButton.isEnabled = true
     }
     
     @objc private func keyboardShow(notification: NSNotification) {

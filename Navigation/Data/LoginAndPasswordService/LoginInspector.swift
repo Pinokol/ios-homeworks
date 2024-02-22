@@ -7,81 +7,119 @@
 
 import Foundation
 
-protocol LoginViewControllerDelegate: AnyObject {
-    
-    func check(_ inputLogin: String, with inputPassword: String, handler: @escaping (Bool) -> Void)
-    //без задержки
-    func check(inputLogin: String, inputPassword: String) throws -> Bool
-    
-    func checkLoginOnly(inputLogin: String) -> Bool
-    
-    func checkPasswordOnly(inputPassword: String) -> Bool
-    
-    func passwordSelection()
-}
-
-protocol LoginFactory {
-    func makeLoginInspector() -> LoginInspector
+protocol LoginViewControllerDelegate {
+    func checkCredentials(email: String, password: String) async throws -> User?
+    func SignUp(email: String, password: String) async throws -> User?
+    func isValidEmail(_ email: String) -> Bool
 }
 
 class LoginInspector: LoginViewControllerDelegate {
-    
-    func checkLoginOnly(inputLogin: String) -> Bool {
-        return Checker.shared.checkLoginOnly(inputLogin: inputLogin)
-    }
-    
-    func checkPasswordOnly(inputPassword: String) -> Bool {
-        return Checker.shared.checkPasswordOnly(inputPassword: inputPassword)
-    }
-    
-    func check(_ inputLogin: String, with inputPassword: String, handler: @escaping (Bool) -> Void) {
-        
-        Checker.shared.check(inputLogin: inputLogin, inputPassword: inputPassword) { result in
-            handler(result)
+    var checker = CheckerService()
+   
+    func checkCredentials(email: String, password: String) async throws  -> User? {
+        var user: User?
+        do {
+            user = try await checker.checkCredentials(email: email, password: password)
+        } catch {
+            throw error
         }
+        return user
     }
     
-    func check(inputLogin: String, inputPassword: String) throws -> Bool {
-        let isCorrectLogin = Checker.shared.checkLoginOnly(inputLogin: inputLogin)
-        let isCorrectPassword = Checker.shared.checkPasswordOnly(inputPassword: inputPassword)
-        if !isCorrectLogin && !isCorrectPassword {
-            throw LoginError.userNotFoundAndWrongPassword
-        } else {
-            if !isCorrectLogin && isCorrectPassword {
-                throw LoginError.userNotFound
-            } else {
-                if isCorrectLogin && !isCorrectPassword {
-                    throw LoginError.wrongPassword
-                } else{
-                    return isCorrectLogin && isCorrectPassword
-                }
-            }
+    func SignUp(email: String, password: String) async throws -> User? {
+        let user: User?
+        do {
+            user = try await checker.signUp(email: email, password: password)
+        } catch {
+            throw error
         }
+        return user
     }
     
-    private func randomPassword() -> String {
-        let allowedCharacters:[String] = String().printable.map { String($0) }
-        let randomInt = Int.random(in: 3..<6)
-        var passWord = ""
-        for _ in 0 ..< randomInt {
-            guard let samSymbols = allowedCharacters.randomElement() else {return ""}
-            passWord.append(samSymbols)
-        }
-        return passWord
-    }
-    
-    func passwordSelection(){
-        Checker.shared.setNewPassword(newPassword: randomPassword())
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
     }
 }
 
-struct MyLogInFactory: LoginFactory {
-    
-    private let inspector =  LoginInspector()
-    
-    func makeLoginInspector() -> LoginInspector {
-        return inspector
-    }
-}
+//protocol LoginViewControllerDelegate: AnyObject {
+//    
+//    func check(_ inputLogin: String, with inputPassword: String, handler: @escaping (Bool) -> Void)
+//    //без задержки
+//    func check(inputLogin: String, inputPassword: String) throws -> Bool
+//    
+//    func checkLoginOnly(inputLogin: String) -> Bool
+//    
+//    func checkPasswordOnly(inputPassword: String) -> Bool
+//    
+//    func passwordSelection()
+//    
+//}
+
+//protocol LoginFactory {
+//    func makeLoginInspector() -> LoginInspector
+//}
+//
+//class LoginInspector: LoginViewControllerDelegate {
+//    
+//    func checkLoginOnly(inputLogin: String) -> Bool {
+//        return Checker.shared.checkLoginOnly(inputLogin: inputLogin)
+//    }
+//    
+//    func checkPasswordOnly(inputPassword: String) -> Bool {
+//        return Checker.shared.checkPasswordOnly(inputPassword: inputPassword)
+//    }
+//    
+//    func check(_ inputLogin: String, with inputPassword: String, handler: @escaping (Bool) -> Void) {
+//        
+//        Checker.shared.check(inputLogin: inputLogin, inputPassword: inputPassword) { result in
+//            handler(result)
+//        }
+//    }
+//    
+//    func check(inputLogin: String, inputPassword: String) throws -> Bool {
+//        let isCorrectLogin = Checker.shared.checkLoginOnly(inputLogin: inputLogin)
+//        let isCorrectPassword = Checker.shared.checkPasswordOnly(inputPassword: inputPassword)
+//        if !isCorrectLogin && !isCorrectPassword {
+//            throw LoginError.userNotFoundAndWrongPassword
+//        } else {
+//            if !isCorrectLogin && isCorrectPassword {
+//                throw LoginError.userNotFound
+//            } else {
+//                if isCorrectLogin && !isCorrectPassword {
+//                    throw LoginError.wrongPassword
+//                } else{
+//                    return isCorrectLogin && isCorrectPassword
+//                }
+//            }
+//        }
+//    }
+//    
+//    private func randomPassword() -> String {
+//        let allowedCharacters:[String] = String().printable.map { String($0) }
+//        let randomInt = Int.random(in: 3..<6)
+//        var passWord = ""
+//        for _ in 0 ..< randomInt {
+//            guard let samSymbols = allowedCharacters.randomElement() else {return ""}
+//            passWord.append(samSymbols)
+//        }
+//        return passWord
+//    }
+//    
+//    func passwordSelection(){
+//        Checker.shared.setNewPassword(newPassword: randomPassword())
+//    }
+//}
+//
+//struct MyLogInFactory: LoginFactory {
+//    
+//    private let inspector =  LoginInspector()
+//    
+//    func makeLoginInspector() -> LoginInspector {
+//        return inspector
+//    }
+//}
 
 

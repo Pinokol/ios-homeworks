@@ -8,10 +8,13 @@
 import Foundation
 
 enum LoginError: String, Error {
-    case userNotFound = "Неправильно введен логин"
-    case wrongPassword // by default equal "wrongPassword"
-    case userNotFoundAndWrongPassword
-    case tooStrongPassword
+    case userNotFound = "Такой пользователь не существует"
+    case wrongPassword = "Неправильно введен пароль"
+    case userNotFoundAndWrongPassword = "Неправильно введен логин и пароль"
+    case tooStrongPassword = "Пароль слижком сложный и долго подбирать"
+    case suchUserAlreadyExists = "Такой пользователь уже зарегистрирован"
+    case authorized = "Успешно зарегистрирован новый пользователь"
+    case successful = "Успешный вход"
 }
 
 enum mediaError: Error {

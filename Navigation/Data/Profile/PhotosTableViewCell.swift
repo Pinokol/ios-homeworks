@@ -47,20 +47,20 @@ final class PhotosTableViewCell: UITableViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            labelPhotos.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            labelPhotos.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            labelPhotos.widthAnchor.constraint(equalToConstant: 80),
-            labelPhotos.heightAnchor.constraint(equalToConstant: 40),
+            labelPhotos.topAnchor.constraint(equalTo: contentView.topAnchor, constant: .spacing12),
+            labelPhotos.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacing12),
+            labelPhotos.widthAnchor.constraint(equalToConstant: .spacing80),
+            labelPhotos.heightAnchor.constraint(equalToConstant: .height40),
             
-            arrowImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            arrowImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacing12),
             arrowImage.centerYAnchor.constraint(equalTo: labelPhotos.centerYAnchor),
-            arrowImage.heightAnchor.constraint(equalToConstant: 40),
-            arrowImage.widthAnchor.constraint(equalToConstant: 40),
+            arrowImage.heightAnchor.constraint(equalToConstant: .height40),
+            arrowImage.widthAnchor.constraint(equalToConstant: .spacing40),
             
-            stackViewImage.topAnchor.constraint(equalTo: labelPhotos.bottomAnchor, constant: 12),
-            stackViewImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            stackViewImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            stackViewImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            stackViewImage.topAnchor.constraint(equalTo: labelPhotos.bottomAnchor, constant: .spacing12),
+            stackViewImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacing12),
+            stackViewImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacing12),
+            stackViewImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -.spacing12),
         ])
     }
     

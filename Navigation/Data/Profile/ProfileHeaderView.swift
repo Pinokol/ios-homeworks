@@ -147,30 +147,30 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         
         
         NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            avatarImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 94),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 94),
+            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: .spacing16),
+            avatarImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: .spacing16),
+            avatarImageView.widthAnchor.constraint(equalToConstant: .spacing94),
+            avatarImageView.heightAnchor.constraint(equalToConstant: .height94),
             
-            fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
+            fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: .spacing27),
             fullNameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
-            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 46),
-            setStatusButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
-            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
-            setStatusButton.widthAnchor.constraint(equalToConstant: 360),
-            setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
+            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: .spacing46),
+            setStatusButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: .spacing16),
+            setStatusButton.heightAnchor.constraint(equalToConstant: .height50),
+            setStatusButton.widthAnchor.constraint(equalToConstant: .spacing360),
+            setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -.spacing16),
             
-            statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -65),
-            statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -14),
-            statusLabel.rightAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 165),
+            statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -.spacing65),
+            statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -.spacing14),
+            statusLabel.rightAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: .spacing165),
             
-            statusTextField.heightAnchor.constraint(equalToConstant: 35),
-            statusTextField.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 10),
-            statusTextField.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
+            statusTextField.heightAnchor.constraint(equalToConstant: .height35),
+            statusTextField.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: .spacing10),
+            statusTextField.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -.spacing16),
             
-            returnAvatarButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            returnAvatarButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+            returnAvatarButton.topAnchor.constraint(equalTo: self.topAnchor, constant: .spacing16),
+            returnAvatarButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -.spacing16)
         ])
     }
     
