@@ -27,12 +27,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
     }
     
-    func sceneDidDisconnect(_ scene: UIScene) {
-            do {
-                try Auth.auth().signOut()
-            }
-            catch{
-                print(error.localizedDescription)
-            }
-        }
 }

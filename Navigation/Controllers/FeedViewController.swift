@@ -7,13 +7,11 @@ import StorageService
 final class FeedViewController: UIViewController {
     
     var post = PostFeed(title: "Мой новый пост ")
-    //к дз MVVM
-    //    var viewModel = FeedModel()
     let feedModel: FeedViewModelProtocol
     var coordinator: FeedCoordinator?
     
     private lazy var buttonAction: (() -> Void) = {
-        self.coordinator?.present(.post, title: self.post.title)//?.presentPost(navigationController: self.navigationController, title: self.post.title)
+        self.coordinator?.present(.post, title: self.post.title)
     }
     
     init() {
@@ -63,7 +61,6 @@ final class FeedViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 20, weight: .regular)
         textField.textColor = .systemBlue
         textField.translatesAutoresizingMaskIntoConstraints = false
-        // textField.placeholder = "Введите секретное слово: \(viewModel.returnCorrectSecretWord())"
         textField.placeholder = "Введите секретное слово: \(feedModel.returnCorrectSecretWord())"
         textField.textAlignment = .center
         textField.keyboardType = UIKeyboardType.default
