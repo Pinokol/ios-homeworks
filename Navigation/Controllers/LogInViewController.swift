@@ -226,6 +226,7 @@ final class LogInViewController: UIViewController {
             do{
                 _ = try await loginDelegate?.SignUp(email: loginField.text ?? "", password: passwordField.text ?? "")
                 loginErrorNotification(caseOf: .authorized)
+                touchLoginButton() // входим в профиль
             } catch let error {
                 print(error.localizedDescription)
                 loginErrorNotification(errorOfFIR: error.localizedDescription)
