@@ -74,6 +74,8 @@ extension SettingsViewController: UITableViewDataSource {
         UserDefaults.standard.set(sender.isOn, forKey: settingName)
         Settings.sizeFile = UserDefaults.standard.bool(forKey: .sizeFile)
         Settings.sortingFile = UserDefaults.standard.bool(forKey: .sortingFile)
+        
+        FileViewController.didChangeSortSwitch.send(true)
     }
 }
 

@@ -5,6 +5,7 @@
 //  Created by Виталий Мишин on 25.02.2024.
 //
 
+import Combine
 import UIKit
 
 final class FileViewController: UIViewController {
@@ -12,6 +13,10 @@ final class FileViewController: UIViewController {
     private let fileManagerService: FileManagerServiceProtocol
     private var contentFolder = [Content]()
     private let currentFolder: String
+    
+    static let didChangeSortSwitch = PassthroughSubject<Bool, Never>()
+    
+    private var cancellable: Set<AnyCancellable> = []
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -28,6 +33,17 @@ final class FileViewController: UIViewController {
         fileManagerService = FileManagerService()
         currentFolder = "Documents"
         super.init(nibName: nil, bundle: nil)
+        
+        FileViewController.didChangeSortSwitch
+            .sink { value in
+                DispatchQueue.main.async {
+                    print("DID RECIEVE CHANGE EVENT")
+                    self.contentFolder = self.fileManagerService.contentsOfDirectory()
+                    
+                    self.tableView.reloadData()
+                }
+            }
+            .store(in: &cancellable)
     }
     
     init(fileManagerService: FileManagerService, currentFolder: String) {
