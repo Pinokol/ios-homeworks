@@ -21,7 +21,7 @@ final class MainCoordinator: Coordinator {
     }
     
     func setup() {
-        tabBarVC.viewControllers = [self.createFeed(), createProfile(), createMedia()]
+        tabBarVC.viewControllers = [self.createFeed(), createProfile(), createFavorite()]
     }
     
     
@@ -38,6 +38,18 @@ final class MainCoordinator: Coordinator {
     private func createMedia() -> UINavigationController {
         let coordinator = MediaCoordinator()
         return coordinator.mediaNC
+    }
+    
+    private func addControllersToTabBar(){
+        tabBarVC.viewControllers = [createFeed(), createProfile(), createFavorite()]
+    }
+    
+    private func createFavorite() -> UINavigationController {
+        let favoriteViewController = FavoriteViewController()
+        let favoriteNavigationController = UINavigationController(rootViewController: favoriteViewController)
+        favoriteNavigationController.title = "Избранное"
+        favoriteNavigationController.tabBarItem = UITabBarItem(title: "Избранное", image: UIImage(systemName: "star"), tag: 2)
+        return favoriteNavigationController
     }
     
 }

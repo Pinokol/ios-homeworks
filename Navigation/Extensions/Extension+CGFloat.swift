@@ -14,6 +14,7 @@ extension CGFloat {
     static let spacing16: CGFloat = 16
     static let spacing20: CGFloat = 20
     static let spacing27: CGFloat = 27
+    static let spacing30: CGFloat = 30
     static let spacing32: CGFloat = 32
     static let spacing40: CGFloat = 40
     static let spacing46: CGFloat = 46
@@ -25,6 +26,7 @@ extension CGFloat {
     static let spacing120: CGFloat = 120
     static let spacing165: CGFloat = 165
     static let spacing360: CGFloat = 360
+    static let height30: CGFloat = 30
     static let height35: CGFloat = 35
     static let height40: CGFloat = 40
     static let height44: CGFloat = 44

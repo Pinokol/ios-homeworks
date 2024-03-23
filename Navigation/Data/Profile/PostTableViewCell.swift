@@ -10,6 +10,9 @@ import StorageService
 class PostTableViewCell: UITableViewCell {
     
     private var viewCounter = 0
+    var favorite: Bool = false
+    let favoriteService = FavoriteService()
+    var favoriteBase = [FavoritesPostData]()
     
     var postAuthor: UILabel = {
         let label = UILabel()
@@ -53,10 +56,27 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
+    var favoriteChecker: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 15
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.black.cgColor
+        return view
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubviews(postAuthor, postImage, postDescription, postLikes, postViews)
+        contentView.addSubviews(postAuthor,
+                                postImage,
+                                postDescription,
+                                postLikes,
+                                postViews,
+                                favoriteChecker)
+        
         setupConstraints()
+        setRecognizer()
         self.selectionStyle = .default
     }
     
@@ -84,7 +104,12 @@ class PostTableViewCell: UITableViewCell {
             
             postViews.topAnchor.constraint(equalTo: postDescription.bottomAnchor, constant: .spacing16),
             postViews.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacing16),
-            postViews.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -.spacing16)
+            postViews.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -.spacing16),
+            
+            favoriteChecker.heightAnchor.constraint(equalToConstant: .height30),
+            favoriteChecker.widthAnchor.constraint(equalToConstant: .spacing30),
+            favoriteChecker.rightAnchor.constraint(equalTo: postAuthor.rightAnchor, constant: -.spacing10),
+            favoriteChecker.topAnchor.constraint(equalTo: postAuthor.topAnchor, constant: 0)
         ])
     }
     
@@ -94,6 +119,34 @@ class PostTableViewCell: UITableViewCell {
         postImage.image = UIImage(named: model.image)
         postLikes.text = "Likes: \(model.likes)"
         postViews.text = "Views: \(model.views)"
+        viewCounter = model.views
+        favoriteChecker.backgroundColor = model.favorite == true ? .green : .white
+        favorite = model.favorite
+    }
+    
+    private func setRecognizer() {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(tapPressed))
+        recognizer.numberOfTapsRequired = 2
+        addGestureRecognizer(recognizer)
+    }
+    
+    @objc private func tapPressed() {
+        let description = postDescription.text
+        let postsFilter = postExamples.filter {
+            $0.description == description
+        }
+        if let resultPost = postsFilter.first, favorite == false {
+            if let rowIndex = postExamples.firstIndex(where: {$0.description == resultPost.description}) {
+                postExamples[rowIndex].favorite = true
+            } else {
+                if let rowIndex = postExamples.firstIndex(where: {$0.description == resultPost.description}) {
+                    postExamples[rowIndex].favorite = false
+                }
+            }
+            favoriteService.createItem(with: resultPost) { [weak self] newCreateItem in
+                self?.favoriteBase = newCreateItem
+            }
+        }
     }
     
     func incrementPostViewsCounter() {

@@ -43,5 +43,4 @@ final class FeedCoordinator: Coordinator {
             feedNC.present(infoViewController, animated: true)
         }
     }
-    
 }
