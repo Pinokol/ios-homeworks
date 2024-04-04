@@ -41,8 +41,8 @@ final class FavoriteService{
             newItem.author = post.author
             newItem.descriptions = post.description
             newItem.image = post.image
-            newItem.favorive = true
-            if let rowIndex = postExamples.firstIndex(where: {$0.description == newItem.descriptions}) {
+            newItem.isFavorite = true
+            if let rowIndex = postExamples.firstIndex(where: {Int64($0.id) == newItem.id}) {
                 postExamples[rowIndex].favorite = true
             }
             if coreDataService.backgroundContext.hasChanges {
@@ -91,7 +91,7 @@ final class FavoriteService{
             do {
                 try coreDataService.backgroundContext.save()
                 favoriteItems.removeAll(where: { $0.description == favoriteItem.description })
-                if let rowIndex = postExamples.firstIndex(where: {$0.description == favoriteItem.descriptions}) {
+                if let rowIndex = postExamples.firstIndex(where: {Int64($0.id) == favoriteItem.id}) {
                     postExamples[rowIndex].favorite = false
                 }
                 

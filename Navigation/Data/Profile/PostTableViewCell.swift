@@ -56,13 +56,10 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
-    var favoriteChecker: UIView = {
-        let view = UIView()
+    var favoriteChecker: UIImageView = {
+        let view = UIImageView(image: UIImage(systemName: "heart.fill"))
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 15
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.black.cgColor
+        view.tintColor = .red
         return view
     }()
     
@@ -120,7 +117,8 @@ class PostTableViewCell: UITableViewCell {
         postLikes.text = "Likes: \(model.likes)"
         postViews.text = "Views: \(model.views)"
         viewCounter = model.views
-        favoriteChecker.backgroundColor = model.favorite == true ? .green : .white
+        
+        favoriteChecker.image = UIImage(systemName: model.favorite ? "heart.fill" : "heart")
         favorite = model.favorite
     }
     

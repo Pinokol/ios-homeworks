@@ -123,7 +123,7 @@ extension FavoriteViewController: UITableViewDelegate {
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
             let oldItem = favoriteBase[indexPath.row]
-            if let rowIndex = postExamples.firstIndex(where: {$0.description == oldItem.descriptions}) {
+            if let rowIndex = postExamples.firstIndex(where: {Int64($0.id) == oldItem.id}) {
                 postExamples[rowIndex].favorite = false
             }
         }
@@ -138,7 +138,7 @@ extension FavoriteViewController: UITableViewDelegate {
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
             let oldItem = favoriteBase[indexPath.row]
-            if let rowIndex = postExamples.firstIndex(where: {$0.description == oldItem.descriptions}) {
+            if let rowIndex = postExamples.firstIndex(where: {Int64($0.id) == oldItem.id}) {
                 postExamples[rowIndex].favorite = false
             }
         }

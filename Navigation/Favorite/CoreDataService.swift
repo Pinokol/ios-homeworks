@@ -30,7 +30,7 @@ final class CoreDataService{
         context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
         return context
     }()
-    
+    //создание контекста
     lazy var backgroundContext: NSManagedObjectContext = {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
