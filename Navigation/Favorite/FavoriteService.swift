@@ -9,29 +9,53 @@ import CoreData
 import StorageService
 import Foundation
 
-final class FavoriteService{
+protocol FavoriteServiceProtocol {
+    var backgroundContext: NSManagedObjectContext { get }
+}
+
+final class FavoriteService: FavoriteServiceProtocol {
     
-    private let coreDataService = CoreDataService.shared
+    private let coreDataService: CoreDataServiceProtocol
+    
+    init(coreDataService: CoreDataServiceProtocol) {
+        self.coreDataService = coreDataService
+        self.fetchItems()
+    }
+    
+    var backgroundContext: NSManagedObjectContext {
+        coreDataService.backgroundContext
+    }
+    
     
     private (set) var favoriteItems = [FavoritesPostData]()
     
-    func fetchItems(completion: @escaping ([FavoritesPostData]) -> Void) {
+    func fetchItems() {
         coreDataService.backgroundContext.perform { [weak self] in
             guard let self else { return }
             let request = FavoritesPostData.fetchRequest()
             do {
                 favoriteItems = try coreDataService.backgroundContext.fetch(request).map { $0 }
-                coreDataService.mainContext.perform { [weak self] in
-                    guard let self else { return }
-                    completion(favoriteItems)
+                
+                
+                for item in favoriteItems {
+                    
+                    if let rowIndex = postExamples.firstIndex(where: {Int64($0.id) == item.id}) {
+                        
+                        print("\(rowIndex), \(item.author ?? "")")
+                        postExamples[rowIndex].favorite = true
+                    }
                 }
+                
+                print(postExamples)
+                
             } catch {
+                
                 print(error)
                 favoriteItems = []
-                completion(favoriteItems)
             }
+            
+            updateCell()
         }
-        updateCell()
     }
     
     func createItem(with post: Post, completion: @escaping ([FavoritesPostData]) -> Void) {
@@ -41,6 +65,7 @@ final class FavoriteService{
             newItem.author = post.author
             newItem.descriptions = post.description
             newItem.image = post.image
+            newItem.id = Int64(post.id)
             newItem.isFavorite = true
             if let rowIndex = postExamples.firstIndex(where: {Int64($0.id) == newItem.id}) {
                 postExamples[rowIndex].favorite = true
@@ -48,62 +73,16 @@ final class FavoriteService{
             if coreDataService.backgroundContext.hasChanges {
                 do {
                     try coreDataService.backgroundContext.save()
-                    coreDataService.mainContext.perform { [weak self] in
+                    coreDataService.backgroundContext.perform { [weak self] in
                         guard let self else { return }
                         favoriteItems.insert(newItem, at: 0)
                         completion(favoriteItems)
                     }
                 } catch {
-                    coreDataService.mainContext.perform { [weak self] in
+                    coreDataService.backgroundContext.perform { [weak self] in
                         guard let self else { return }
                         completion(favoriteItems)
                     }
-                }
-            }
-        }
-        updateCell()
-    }
-    
-    func fetchPosts(withPredicate search: String, completion: @escaping ([FavoritesPostData]) -> Void) {
-        let predicate = NSPredicate(format: "author CONTAINS %@", search)
-        coreDataService.backgroundContext.perform { [weak self] in
-            guard let self else { return }
-            let request = NSFetchRequest<FavoritesPostData>(entityName: "FavoritesPostData")
-            request.predicate = predicate
-            do {
-                favoriteItems = try coreDataService.backgroundContext.fetch(request).map{$0}
-                coreDataService.mainContext.perform { [weak self] in
-                    guard let self else { return }
-                    completion(favoriteItems)
-                }
-            } catch {
-                print(error)
-                favoriteItems = []
-                completion(favoriteItems)
-            }
-        }
-    }
-    
-    func deleteItem(_ favoriteItem: FavoritesPostData, completion: @escaping ([FavoritesPostData]) -> Void) {
-        coreDataService.backgroundContext.perform { [weak self] in
-            guard let self else { return }
-            coreDataService.backgroundContext.delete(favoriteItem)
-            do {
-                try coreDataService.backgroundContext.save()
-                favoriteItems.removeAll(where: { $0.description == favoriteItem.description })
-                if let rowIndex = postExamples.firstIndex(where: {Int64($0.id) == favoriteItem.id}) {
-                    postExamples[rowIndex].favorite = false
-                }
-                
-                coreDataService.mainContext.perform { [weak self] in
-                    guard let self else { return }
-                    completion(favoriteItems)
-                }
-            } catch {
-                print(error)
-                coreDataService.mainContext.perform { [weak self] in
-                    guard let self else { return }
-                    completion(favoriteItems)
                 }
             }
         }

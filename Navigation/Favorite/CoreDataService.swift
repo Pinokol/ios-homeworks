@@ -8,7 +8,11 @@
 import CoreData
 import Foundation
 
-final class CoreDataService{
+protocol CoreDataServiceProtocol {
+    var backgroundContext: NSManagedObjectContext { get }
+}
+
+final class CoreDataService: CoreDataServiceProtocol{
     
     static let shared = CoreDataService()
     
@@ -25,11 +29,11 @@ final class CoreDataService{
         return container
     }()
     
-    lazy var mainContext: NSManagedObjectContext = {
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
-        return context
-    }()
+//    lazy var mainContext: NSManagedObjectContext = {
+//        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+//        context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+//        return context
+//    }()
     //создание контекста
     lazy var backgroundContext: NSManagedObjectContext = {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)

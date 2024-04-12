@@ -45,7 +45,10 @@ final class MainCoordinator: Coordinator {
     }
     
     private func createFavorite() -> UINavigationController {
-        let favoriteViewController = FavoriteViewController()
+        
+        let service = FavoriteService(coreDataService: CoreDataService.shared)
+        
+        let favoriteViewController = FavoriteViewController(service: service)
         let favoriteNavigationController = UINavigationController(rootViewController: favoriteViewController)
         favoriteNavigationController.title = "Избранное"
         favoriteNavigationController.tabBarItem = UITabBarItem(title: "Избранное", image: UIImage(systemName: "star"), tag: 2)

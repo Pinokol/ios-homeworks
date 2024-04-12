@@ -11,7 +11,7 @@ class PostTableViewCell: UITableViewCell {
     
     private var viewCounter = 0
     var favorite: Bool = false
-    let favoriteService = FavoriteService()
+    let favoriteService: FavoriteService
     var favoriteBase = [FavoritesPostData]()
     
     var postAuthor: UILabel = {
@@ -64,6 +64,9 @@ class PostTableViewCell: UITableViewCell {
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        
+        self.favoriteService = FavoriteService(coreDataService: CoreDataService.shared)
+        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubviews(postAuthor,
                                 postImage,
