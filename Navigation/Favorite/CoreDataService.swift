@@ -1,0 +1,47 @@
+//
+//  CoreDataService.swift
+//  Navigation
+//
+//  Created by Виталий Мишин on 20.03.2024.
+//
+
+import CoreData
+import Foundation
+
+protocol CoreDataServiceProtocol {
+    var backgroundContext: NSManagedObjectContext { get }
+}
+
+final class CoreDataService: CoreDataServiceProtocol{
+    
+    static let shared = CoreDataService()
+    
+    private init(){}
+    
+    private let persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: .coreDataBaseName)
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                print(error)
+                assertionFailure()
+            }
+        }
+        return container
+    }()
+    
+//    lazy var mainContext: NSManagedObjectContext = {
+//        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+//        context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+//        return context
+//    }()
+    //создание контекста
+    lazy var backgroundContext: NSManagedObjectContext = {
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+        return context
+    }()
+}
+
+private extension String {
+    static let coreDataBaseName = "NavigationItems"
+}
