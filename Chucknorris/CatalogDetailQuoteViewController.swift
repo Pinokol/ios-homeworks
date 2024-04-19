@@ -30,7 +30,7 @@ final class CatalogDetailQuoteViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
-        allJokes = AllJoke.shared.realm?.objects(JokeRealm.self)
+        allJokes = AllJoke.shared.realm.objects(JokeRealm.self)
         showAllJoke()
     }
     
