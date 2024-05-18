@@ -1,0 +1,91 @@
+/* 
+  Localizable.strings
+  Navigation
+
+  Created by Виталий Мишин on 13.05.2024.
+  
+*/
+
+
+//"dollars" = "%@ dollars";
+
+"default_configuration" = "Default Configuration";
+"Navigation" = "Navigation";
+"did_sign_out_user" = "Did sign out user";
+"back" = "Back";
+"cancel" = "Cancel";
+"create" = "Create";
+"new_point" = "New point";
+
+"voice_recorder" = "Voice_recorder";
+"video" = "Video";
+"recording" = "Recording";
+"play" = "Воспроизвести";
+"profile" = "Profile";
+"photos" = "Photos";
+"photo_gallery" = "Photo Gallery";
+"login" = "Log In";
+"Password" = "Password";
+"register" = "Register";
+"ups" = "Ups";
+"name_song" = "Name song";
+"no" = "Нет";
+"favorites" = "Favorites";
+"search" = "Search";
+"delete" = "Delete";
+"feed" = "Feed";
+"info" = "Info";
+"attention" = "Attention";
+
+"ok" = "OK";
+"yes" = "Yes";
+"no_data_available!" = "No data available!";
+"error:" = "Error:";
+"response_code:" = "Response code:";
+"headlines:" = "Headlines:";
+"data_received:" = "Data received:";
+"json_processing_error:" = "json processing error:";
+"unowned_status_code" = "Unowned status code";
+
+"status_code" = "Status code";
+"raw_responce" = "RAW responce";
+"set_status" = "Set the status";
+"hipster_tigr" = "Hipster Tigr";
+"waiting_for_something" = "Waiting for something...";
+"set_your_status" = "Set your status..";
+
+"likes" = "Likes";
+"views" = "Views";
+"sec" = "sec";
+"filter_did_not_work" = "The filter did not work";
+"process_time" = "Process time";
+"seconds" = "seconds";
+"my_post" = "My post";
+"first_post" = "First post";
+"media" = "Media";
+"map" = "Map";
+"enter_secret_word" = "Enter secret word";
+"checking_secret_word" = "Checking the secret word";
+"right" = "Right";
+"no_true" = "No true";
+"Amur" = "Amur";
+"word_is " = "Word is ";
+"correct" = "Correct";
+"not_correct" = "Not correct";
+"alert" = "Alert";
+"hurray_we_got_alert" = "Hurray!!! \n We got an alert!";
+"success" = "SUCCESS!!!";
+
+"set_route" = "Set a route";
+"new_point" = "New point";
+"author" = "Author";
+"favorites" = "Favorites";
+"favorites_posts" = "Favorites posts";
+"label_name" = "Label name";
+
+"enter_author" = "Enter the author";
+"sorting_posts_author" = "Sorting posts by author";
+"author_name" = "Author's name";
+
+"period_planet_Tatooine_revolution_around_star" = "Period of the planet Tatooine's revolution around its star";
+"for_your_convenience_you_can_set_the_correct_login_and_password" = "For your convenience, you can set the correct Login and Password";

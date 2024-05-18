@@ -6,13 +6,15 @@ import StorageService
 
 final class FeedViewController: UIViewController {
     
-    var post = PostFeed(title: "Мой новый пост ")
+    var post = PostFeed(title: "my_post".localized)
     let feedModel: FeedViewModelProtocol
     var coordinator: FeedCoordinator?
+    
     
     private lazy var buttonAction: (() -> Void) = {
         self.coordinator?.present(.post, title: self.post.title)
     }
+    
     
     init() {
         self.feedModel = FeedViewModel()
@@ -43,25 +45,28 @@ final class FeedViewController: UIViewController {
         stackView.distribution = .fillEqually
         stackView.spacing = 25.0
         
-        var feedButton1 = CustomButton(titleText: "Первый пост", titleColor: .white, backgroundColor: .systemBlue, tapAction: buttonAction)
+        var feedButton1 = CustomButton(titleText: "first_post".localized, titleColor: .white, backgroundColor: .systemBlue, tapAction: buttonAction)
         stackView.addArrangedSubview(feedButton1)
         
-        var feedButton2 = CustomButton(titleText: "Второй пост", titleColor: .white, backgroundColor: .systemGreen, tapAction: buttonAction)
+        var feedButton2 = CustomButton(titleText: "media".localized, titleColor: .white, backgroundColor: .systemGreen, tapAction: buttomMediaAction)
         stackView.addArrangedSubview(feedButton2)
+        
+        var thirdButton = CustomButton(titleText: "map".localized, titleColor: .black, backgroundColor: .lightGray, tapAction: buttonMapAction)
+        stackView.addArrangedSubview(thirdButton)
         
         return stackView
     }()
     
     private lazy var checkSecretWordTextField: UITextField = {
         var textField = UITextField()
-        textField.backgroundColor = .white
+        // textField.backgroundColor = .white
         textField.layer.cornerRadius = 12.0
         textField.layer.borderWidth = 1.0
         textField.layer.borderColor = UIColor.black.cgColor
         textField.font = UIFont.systemFont(ofSize: 20, weight: .regular)
         textField.textColor = .systemBlue
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Введите секретное слово: \(feedModel.returnCorrectSecretWord())"
+        textField.placeholder = "enter_secret_word".localized + ":  \(feedModel.returnCorrectSecretWord())"
         textField.textAlignment = .center
         textField.keyboardType = UIKeyboardType.default
         textField.returnKeyType = UIReturnKeyType.done
@@ -72,7 +77,7 @@ final class FeedViewController: UIViewController {
     }()
     
     private lazy var checkGuessButton: CustomButton = {
-        var button = CustomButton(titleText: "Проверка секретного слова", titleColor: .white, backgroundColor: .systemBrown, tapAction: self.actionSetStatusButtonPressed)
+        var button = CustomButton(titleText: "checking_secret_word".localized, titleColor: .white, backgroundColor: .systemBrown, tapAction: self.actionSetStatusButtonPressed)
         button.setTitleColor(.black, for: .selected)
         button.setTitleColor(.black, for: .highlighted)
         button.layer.cornerRadius = 10
@@ -104,6 +109,14 @@ final class FeedViewController: UIViewController {
         setupObservers()
     }
     
+    private lazy var buttomMediaAction: (() -> Void) = {
+        self.coordinator?.presentMedia(navigationController: self.navigationController)
+    }
+    
+    private lazy var buttonMapAction: (() -> Void) = {
+        self.coordinator?.presentMap(navigationController: self.navigationController)
+    }
+    
     func setupObservers(){
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -112,7 +125,7 @@ final class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .gray
+        view.backgroundColor = .backgroung
         checkSecretWordTextField.delegate = self
         view.addSubview(feedScrollView)
         feedScrollView.addSubview(contentView)
@@ -135,14 +148,14 @@ final class FeedViewController: UIViewController {
     }
     
     @objc func trueSelector() {
-        resultLabelOfSecretWord.text = "Верно"
+        resultLabelOfSecretWord.text = "right".localized
         resultLabelOfSecretWord.backgroundColor = .green
         resultLabelOfSecretWord.layer.borderColor = UIColor.green.cgColor
         resultLabelOfSecretWord.alpha = 1
     }
     
     @objc func falseSelector() {
-        resultLabelOfSecretWord.text = "Не верно"
+        resultLabelOfSecretWord.text = "no_true".localized
         resultLabelOfSecretWord.backgroundColor = .red
         resultLabelOfSecretWord.layer.borderColor = UIColor.red.cgColor
         resultLabelOfSecretWord.alpha = 1

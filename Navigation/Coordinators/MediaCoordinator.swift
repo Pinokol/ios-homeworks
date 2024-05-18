@@ -15,8 +15,8 @@ final class MediaCoordinator: Coordinator {
     
     init(){
         mediaNC = UINavigationController(rootViewController: mediaVC)
-        mediaNC.title = "Медиа"
-        mediaNC.tabBarItem = UITabBarItem(title: "Медиа", image: UIImage(systemName:"doc.richtext"), tag: 0)
+        mediaNC.title = "media".localized
+        mediaNC.tabBarItem = UITabBarItem(title: "media".localized, image: UIImage(systemName:"doc.richtext"), tag: 0)
         controller = mediaNC
         setup()
     }

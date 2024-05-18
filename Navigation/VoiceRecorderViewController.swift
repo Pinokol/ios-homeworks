@@ -11,23 +11,23 @@ import AVKit
 
 class VoiceRecorderViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     
-    private var recordingSession: AVAudioSession!
-    private var audioRecorder: AVAudioRecorder!
+    private var recordingSession: AVAudioSession?
+    private var audioRecorder: AVAudioRecorder?
     private var player = AVAudioPlayer()
     
     let backButton: UIBarButtonItem = {
         let backButton = UIBarButtonItem()
-        backButton.title = "Назад"
+        backButton.title = "back".localized
         return backButton
     }()
     
     private lazy var recordButton: CustomButton = {
-        let recordButton = CustomButton(titleText: "Записать", titleColor: .white, backgroundColor: .systemBlue, tapAction: self.recordTapped)
+        let recordButton = CustomButton(titleText: "recording".localized, titleColor: .white, backgroundColor: .systemBlue, tapAction: self.recordTapped)
         return recordButton
     }()
     
     private lazy var playRecordButton: CustomButton = {
-        let playRecordButton = CustomButton(titleText: "Воспроизвести", titleColor: .black, backgroundColor: .white, tapAction: self.playRecord)
+        let playRecordButton = CustomButton(titleText: "play".localized, titleColor: .black, backgroundColor: .white, tapAction: self.playRecord)
         return playRecordButton
     }()
     

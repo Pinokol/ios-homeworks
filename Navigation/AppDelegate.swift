@@ -20,13 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+        return UISceneConfiguration(name: "default_configuration".localized, sessionRole: connectingSceneSession.role)
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
         do {
             try Auth.auth().signOut()
-            print("Did sign out user")
+            print("did_sign_out_user".localized)
         }
         catch{
             print(error.localizedDescription)

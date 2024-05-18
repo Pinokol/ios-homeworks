@@ -30,6 +30,7 @@ final class LogInViewController: UIViewController {
     
     private lazy var loginScrollView: UIScrollView = {
         let scrollView = UIScrollView()
+        scrollView.backgroundColor = .backgroung
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
@@ -64,7 +65,7 @@ final class LogInViewController: UIViewController {
             button.setBackgroundImage(pixel.image(alpha: 0.4), for: .disabled)
         }
         
-        button.setTitle("Log In", for: .normal)
+        button.setTitle("login".localized, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.addTarget(nil, action: #selector(touchLoginButton), for: .touchUpInside)
         button.layer.cornerRadius = 12
@@ -81,7 +82,7 @@ final class LogInViewController: UIViewController {
         login.leftViewMode = .always
         login.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: login.frame.height))
         login.keyboardType = .emailAddress
-        login.textColor = .black
+        login.textColor = .primaryText
         login.font = UIFont.systemFont(ofSize: 16)
         login.autocapitalizationType = .none
         login.returnKeyType = .done
@@ -101,7 +102,7 @@ final class LogInViewController: UIViewController {
         password.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: password.frame.height))
         password.isSecureTextEntry = true
         password.addTarget(self, action: #selector(loginOrPasswordChanged), for: .editingChanged)
-        password.textColor = .black
+        password.textColor = .primaryText
         password.font = UIFont.systemFont(ofSize: 16)
         password.autocapitalizationType = .none
         password.returnKeyType = .done
@@ -109,14 +110,13 @@ final class LogInViewController: UIViewController {
     }()
     
     private lazy var signUpButton: CustomButton = {
-        let button = CustomButton(titleText: "Зарегистрироваться", titleColor: .white,
+        let button = CustomButton(titleText: "register".localized, titleColor: .white,
                                   backgroundColor: .systemBlue, tapAction: signUpAction)
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
         navigationController?.navigationBar.isHidden = true
         loginField.delegate = self
         passwordField.delegate = self
@@ -197,15 +197,15 @@ final class LogInViewController: UIViewController {
     
     private func loginErrorNotification(caseOf error: LoginError) {
         let errorMessage = error.rawValue
-        let alertController = UIAlertController(title: "Предупреждение", message: errorMessage, preferredStyle: .alert)
-        let actionAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
+        let alertController = UIAlertController(title: "alert".localized, message: errorMessage, preferredStyle: .alert)
+        let actionAlert = UIAlertAction(title: "ok".localized, style: .default, handler: nil)
         alertController.addAction(actionAlert)
         self.present(alertController, animated: true)
     }
     
     private func loginErrorNotification(errorOfFIR: String) {
-        let alertController = UIAlertController(title: "Ошибка", message: errorOfFIR, preferredStyle: .alert)
-        let actionAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
+        let alertController = UIAlertController(title: "error".localized, message: errorOfFIR, preferredStyle: .alert)
+        let actionAlert = UIAlertAction(title: "ok".localized, style: .default, handler: nil)
         alertController.addAction(actionAlert)
         self.present(alertController, animated: true)
     }
@@ -241,14 +241,14 @@ final class LogInViewController: UIViewController {
     }
     
     private func convenientNotification (){
-        let alertController = UIAlertController(title: "Внимание",
-                                                message: "Для Вашего удобства можно установить правильные Login и Password",
+        let alertController = UIAlertController(title: "attention".localized,
+                                                message: "for_your_convenience_you_can_set_the_correct_login_and_password".localized,
                                                 preferredStyle: .alert)
-        let actionAlertYes = UIAlertAction(title: "Yes", style: .default, handler: { action in
+        let actionAlertYes = UIAlertAction(title: "yes".localized, style: .default, handler: { action in
             self.loginField.text = "test@test.test"
             self.passwordField.text = "123456"
         })
-        let actionAlertNo = UIAlertAction(title: "No", style: .default, handler: nil)
+        let actionAlertNo = UIAlertAction(title: "no".localized, style: .default, handler: nil)
         alertController.addAction(actionAlertYes)
         alertController.addAction(actionAlertNo)
         self.present(alertController, animated: true)

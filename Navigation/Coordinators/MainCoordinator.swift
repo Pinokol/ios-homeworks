@@ -27,6 +27,9 @@ final class MainCoordinator: Coordinator {
     
     private func createFeed() -> UINavigationController {
         let coordinator = FeedCoordinator()
+        let feedNC = UINavigationController(rootViewController: FeedViewController())
+        feedNC.title = "feed".localized
+        feedNC.tabBarItem = UITabBarItem(title: "feed".localized, image: UIImage(systemName:"doc.richtext"), tag: 0)
         return coordinator.feedNC
     }
     
@@ -50,8 +53,8 @@ final class MainCoordinator: Coordinator {
         
         let favoriteViewController = FavoriteViewController(service: service)
         let favoriteNavigationController = UINavigationController(rootViewController: favoriteViewController)
-        favoriteNavigationController.title = "Избранное"
-        favoriteNavigationController.tabBarItem = UITabBarItem(title: "Избранное", image: UIImage(systemName: "star"), tag: 2)
+        favoriteNavigationController.title = "favorites".localized
+        favoriteNavigationController.tabBarItem = UITabBarItem(title: "favorites".localized, image: UIImage(systemName: "star"), tag: 2)
         return favoriteNavigationController
     }
     

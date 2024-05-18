@@ -22,7 +22,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("Ups")
+        fatalError("ups".localized)
     }
     
     private func setupUI(){

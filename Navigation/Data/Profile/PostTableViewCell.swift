@@ -18,7 +18,7 @@ class PostTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
+        label.textColor = .primaryText
         label.numberOfLines = 2
         return label
     }()
@@ -26,7 +26,7 @@ class PostTableViewCell: UITableViewCell {
     var postImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.backgroundColor = .black
+        image.backgroundColor = .backgroung
         image.contentMode = .scaleAspectFit
         return image
     }()
@@ -35,7 +35,7 @@ class PostTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .systemGray
+        label.textColor = .primaryText
         label.numberOfLines = 0
         return label
     }()
@@ -44,7 +44,7 @@ class PostTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16)
-        label.textColor = .black
+        label.textColor = .primaryText
         return label
     }()
     
@@ -52,7 +52,7 @@ class PostTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16)
-        label.textColor = .black
+        label.textColor = .primaryText
         return label
     }()
     
@@ -81,7 +81,7 @@ class PostTableViewCell: UITableViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("Error")
+        fatalError("error".localized)
     }
     
     private func setupConstraints() {
@@ -117,8 +117,8 @@ class PostTableViewCell: UITableViewCell {
         postAuthor.text = model.author
         postDescription.text = model.description
         postImage.image = UIImage(named: model.image)
-        postLikes.text = "Likes: \(model.likes)"
-        postViews.text = "Views: \(model.views)"
+        postLikes.text = "likes".localized + ": \(model.likes)"
+        postViews.text = "views".localized + ": \(model.views)"
         viewCounter = model.views
         
         favoriteChecker.image = UIImage(systemName: model.favorite ? "heart.fill" : "heart")
@@ -152,7 +152,7 @@ class PostTableViewCell: UITableViewCell {
     
     func incrementPostViewsCounter() {
         viewCounter += 1
-        postViews.text = "Views: \(viewCounter)"
+        postViews.text = "views".localized + ": \(viewCounter)"
     }
 }
 

@@ -17,8 +17,8 @@ final class ProfileCoordinator: Coordinator {
     init(){
         
         profileNC = UINavigationController(rootViewController: loginVC)
-        profileNC.title = "Профиль"
-        profileNC.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.circle"), tag: 1)
+        profileNC.title = "profile".localized
+        profileNC.tabBarItem = UITabBarItem(title: "profile".localized, image: UIImage(systemName: "person.circle"), tag: 1)
         
         controller = profileNC
         setup()

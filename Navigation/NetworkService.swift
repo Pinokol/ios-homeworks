@@ -15,25 +15,25 @@ struct NetworkService {
         let task = session.dataTask(with: url) {data, response, error in
             
             if let error {
-                print("Ошибка: \(error.localizedDescription)")
+                print("error:".localized + " \(error.localizedDescription)")
                 return
             }
             
             if let httpResponse = response as? HTTPURLResponse {
-                print("Код ответа: \(httpResponse.statusCode)")
-                print("Заголовки: \(httpResponse.allHeaderFields)")
+                print("response_code:".localized + " \(httpResponse.statusCode)")
+                print("headlines:".localized + " \(httpResponse.allHeaderFields)")
             }
             
             guard let data else {
-                print("Нет данных!")
+                print("no_data_available!".localized)
                 return
             }
             
             do {
                 let json = try JSONSerialization.jsonObject(with: data)
-                print("Данные получены: \(json)")
+                print("data_received:".localized + " \(json)")
             } catch {
-                print("Ошибка обработки JSON: \(error.localizedDescription)")
+                print("json_processing_error:".localized + " \(error.localizedDescription)")
             }
         }
         task.resume()
@@ -45,7 +45,7 @@ struct NetworkService {
         let task = session.dataTask(with: url) {data, response, error in
             
             if let error {
-                print("Ошибка: \(error.localizedDescription)")
+                print("error:".localized + " \(error.localizedDescription)")
                 completion(.failure(.unowned))
             }
             
@@ -58,7 +58,7 @@ struct NetworkService {
                             guard let title = jsonDictionary["title"] as? String else { return }
                             completion(.success(title))
                         } catch {
-                            print("Ошибка обработки JSON: \(error.localizedDescription)")
+                            print("json_processing_error:".localized + " \(error.localizedDescription)")
                             completion(.failure(.decodeError))
                         }
                     }
@@ -87,14 +87,14 @@ struct NetworkService {
             
             if let response = response as? HTTPURLResponse {
                 
-                print("Status code: \(response.statusCode)")
+                print("status_code:".localized + " \(response.statusCode)")
                 
                 switch response.statusCode {
                 case 200:
                     if let data = data {
                         
                         if let string = String(data: data, encoding: .utf8) {
-                            print("RAW responce: \(string)")
+                            print("raw_responce:".localized + " \(string)")
                         }
                         
                         let decoder = JSONDecoder()
@@ -113,7 +113,7 @@ struct NetworkService {
                 case 500:
                     completion(.failure(.serverError))
                 default:
-                    assertionFailure("unowned status code = \(response.statusCode)")
+                    assertionFailure("unowned_status_code".localized + " =  \(response.statusCode)")
                     completion(.failure(.unowned))
                 }
             }

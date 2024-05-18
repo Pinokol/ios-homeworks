@@ -27,6 +27,28 @@ final class CustomButton: UIButton {
         addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
+    init(mapTitle title: String, tapAction: (() -> Void)?) {
+        super.init(frame: .zero)
+        self.someAction = tapAction
+        translatesAutoresizingMaskIntoConstraints = false
+        setTitle(title, for: .normal)
+        backgroundColor = .white
+        setTitleColor(.tintColor, for: .normal)
+        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        layer.cornerRadius = 10
+    }
+    
+    init(mapImage image: String, tapAction: (() -> Void)?) {
+        super.init(frame: .zero)
+        self.someAction = tapAction
+        translatesAutoresizingMaskIntoConstraints = false
+        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        layer.cornerRadius = 5
+        backgroundColor = .white
+        guard let imageUI = UIImage(systemName: image) else { return }
+        setImage(imageUI.imageWith(newSize: CGSize(width: 25, height: 30)).withTintColor(.lightGray), for: .normal)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

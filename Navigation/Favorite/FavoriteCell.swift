@@ -15,7 +15,7 @@ class FavoriteCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 18, weight: .bold)
-        label.textColor = .black
+        label.textColor = .primaryText
         label.numberOfLines = 2
         return label
     }()
@@ -23,7 +23,7 @@ class FavoriteCell: UITableViewCell {
     var postImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.backgroundColor = .black
+        image.backgroundColor = .backgroung
         image.contentMode = .scaleAspectFit
         return image
     }()
@@ -32,7 +32,7 @@ class FavoriteCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .systemGray
+        label.textColor = .primaryText
         label.numberOfLines = 0
         return label
     }()

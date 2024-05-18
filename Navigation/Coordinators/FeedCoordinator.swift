@@ -16,8 +16,8 @@ final class FeedCoordinator: Coordinator {
     
     init(){
         feedNC = UINavigationController(rootViewController: feedVC)
-        feedNC.title = "Лента"
-        feedNC.tabBarItem = UITabBarItem(title: "Лента", image: UIImage(systemName:"doc.richtext"), tag: 0)
+        feedNC.title = "feed".localized
+        feedNC.tabBarItem = UITabBarItem(title: "feed".localized, image: UIImage(systemName:"doc.richtext"), tag: 0)
         controller = feedNC
         setup()
     }
@@ -42,5 +42,14 @@ final class FeedCoordinator: Coordinator {
             infoViewController.modalPresentationStyle = .pageSheet
             feedNC.present(infoViewController, animated: true)
         }
+    }
+    
+    func presentMap(navigationController: UINavigationController?){
+        let mapViewController = MapViewController(coordinator: self)
+        navigationController?.pushViewController(mapViewController, animated: true)
+    }
+    func presentMedia(navigationController: UINavigationController?){
+        let mediaViewController = MediaViewController()
+        navigationController?.pushViewController(mediaViewController, animated: true)
     }
 }

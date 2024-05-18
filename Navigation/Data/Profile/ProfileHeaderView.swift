@@ -26,18 +26,18 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     private let fullNameLabel: UILabel = {
         let name = UILabel()
-        name.text = "Hipster Tigr"
+        name.text = "hipster_tigr".localized
         name.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        name.textColor = .black
+        name.textColor = .primaryText
         name.translatesAutoresizingMaskIntoConstraints = false
         return name
     }()
     
     private let statusLabel: UILabel = {
         let signature = UILabel()
-        signature.text = "Waiting for something..."
+        signature.text = "waiting_for_something".localized
         signature.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        signature.textColor = .gray
+        signature.textColor = .primaryText
         signature.translatesAutoresizingMaskIntoConstraints = false
         return signature
     }()
@@ -50,7 +50,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         button.layer.shadowColor = UIColor.black.cgColor
         button.backgroundColor = .blue
         button.layer.cornerRadius = 14.0
-        button.setTitle("Set status", for: .normal)
+        button.setTitle("set_status".localized, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleShadowColor(.black, for: .application)
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
@@ -60,14 +60,14 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     private var statusTextField: UITextField = {
         var textField = UITextField()
-        textField.backgroundColor = .white
+        // textField.backgroundColor = .white
         textField.layer.cornerRadius = 12.0
         textField.layer.borderWidth = 1.0
         textField.layer.borderColor = UIColor.black.cgColor
         textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         textField.textColor = .black
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Set your status.."
+        textField.placeholder = "set_your_status".localized
         textField.keyboardType = UIKeyboardType.default
         textField.returnKeyType = UIReturnKeyType.done
         textField.autocorrectionType = UITextAutocorrectionType.no

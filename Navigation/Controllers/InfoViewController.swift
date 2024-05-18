@@ -119,7 +119,7 @@ class InfoViewController: UIViewController {
             switch result {
             case .success(let planet):
                 DispatchQueue.main.async {
-                    self?.orbitalPeriodLabel.text = "период обращения планеты Татуин вокруг своей звезды: \(planet.orbitalPeriod)"
+                    self?.orbitalPeriodLabel.text = "period_planet_Tatooine_revolution_around_star".localized + ": \(planet.orbitalPeriod)"
                 }
                 planet.residents.forEach { resident in
                     self?.getInfoAboutResident(resident: resident) { resultResident in
@@ -179,7 +179,7 @@ class InfoViewController: UIViewController {
         let button = UIButton()
         button.backgroundColor = .blue
         button.layer.cornerRadius = 12
-        button.setTitle("Alert", for: .normal)
+        button.setTitle("alert".localized, for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
@@ -190,8 +190,8 @@ class InfoViewController: UIViewController {
     @objc
     private func buttonAction(sender: UIButton) {
         let alert = UIAlertController()
-        alert.title = "Алёрт"
-        alert.message = "Ура!!!\nУ нас получился алёрт"
+        alert.title = "alert".localized
+        alert.message = "hurray_we_got_alert".localized
         alert.addAction(UIAlertAction(title: "1", style: .default, handler: { _ in
             print("1")
         }))
@@ -204,7 +204,7 @@ class InfoViewController: UIViewController {
     @objc
     private func saveAction(sender: UIButton) {
         
-        if self.save(self.residents, to: "Residents") { print("SUCCESS!!!")}
+        if self.save(self.residents, to: "Residents") { print("success".localized)}
     }
     
 }

@@ -27,7 +27,7 @@ final class PhotosViewController: UIViewController {
     lazy var photosCollectionView: UICollectionView = {
         let photos = UICollectionView(frame: .zero, collectionViewLayout: layout)
         photos.translatesAutoresizingMaskIntoConstraints = false
-        photos.backgroundColor = .white
+        photos.backgroundColor = .backgroung
         photos.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: photoIdent)
         return photos
     }()
@@ -66,12 +66,12 @@ final class PhotosViewController: UIViewController {
         var filterDuration = 0.00
         timer = Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true, block: { _ in
             filterDuration += timerInterval
-            let totalTime = String( format: "%.2f sec", filterDuration)
+            let totalTime = String( format: "%.2f" + "sec".localized, filterDuration)
             self.navigationItem.rightBarButtonItem?.title = totalTime
         })
         let startDate = Date()
         imageProcessor.processImagesOnThread(sourceImages: collectionImages, filter: filter, qos: qos) { [weak self] filteredImage in
-            guard let self else { assertionFailure ("Фильтр не сработал"); return }
+            guard let self else { assertionFailure ("filter_did_not_work".localized); return }
             let images = filteredImage.compactMap {
                 guard let img = $0 else { return UIImage() }
                 return UIImage(cgImage: img)
@@ -82,18 +82,18 @@ final class PhotosViewController: UIViewController {
             DispatchQueue.main.sync {
                 self.photosCollectionView.reloadData()
                 self.disableTimer()
-                dump("Process time:  \(Date().timeIntervalSince(startDate)) seconds")
+                dump("process_time".localized + ": \(Date().timeIntervalSince(startDate))" + "seconds".localized)
             }
         }
     }
     
     private func setupUI(){
-        self.title = "Photo Gallery"
+        self.title = "photo_gallery".localized
         self.view.addSubview(photosCollectionView)
         self.photosCollectionView.dataSource = self
         self.photosCollectionView.delegate = self
         let backButton = UIBarButtonItem()
-        backButton.title = "Back"
+        backButton.title = "back".localized
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
     }
     

@@ -28,7 +28,7 @@ final class PostViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .lightGray
         self.navigationItem.title = post?.title
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Info", style: .plain, target: self, action: #selector(buttonAction))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "info".localized, style: .plain, target: self, action: #selector(buttonAction))
     }
     
     @objc func buttonPressed(sender: UIButton) {

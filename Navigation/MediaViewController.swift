@@ -25,7 +25,7 @@ class MediaViewController: UIViewController {
     
     let backButton: UIBarButtonItem = {
         let backButton = UIBarButtonItem()
-        backButton.title = "Назад"
+        backButton.title = "back".localized
         return backButton
     }()
     
@@ -33,10 +33,10 @@ class MediaViewController: UIViewController {
         let songNameLabel = UILabel()
         songNameLabel.font = UIFont.boldSystemFont(ofSize: 16)
         songNameLabel.numberOfLines = 0
-        songNameLabel.textColor = .black
+        songNameLabel.textColor = .primaryText
         songNameLabel.backgroundColor = .systemGray3
         songNameLabel.textAlignment = .center
-        songNameLabel.text = "Имя песни"
+        songNameLabel.text = "name_song".localized
         songNameLabel.translatesAutoresizingMaskIntoConstraints = false
         return songNameLabel
     }()
@@ -44,7 +44,7 @@ class MediaViewController: UIViewController {
     private lazy var playPausaTrackButton: UIButton = {
         let playPausaButton = UIButton()
         playPausaButton.contentMode = .scaleToFill
-        playPausaButton.tintColor = .black
+        playPausaButton.tintColor = .primaryText
         playPausaButton.setImage(UIImage.init(systemName: "play.fill"), for: .normal)
         playPausaButton.addTarget(nil, action: #selector(tapOnPlayPausaButton), for: .touchUpInside)
         playPausaButton.translatesAutoresizingMaskIntoConstraints = false
@@ -60,7 +60,7 @@ class MediaViewController: UIViewController {
     private lazy var stopTrackButton: UIButton = {
         let stopButton = UIButton()
         stopButton.contentMode = .scaleToFill
-        stopButton.tintColor = .black
+        stopButton.tintColor = .primaryText
         stopButton.setImage(UIImage.init(systemName: "stop.fill"), for: .normal)
         stopButton.addTarget(nil, action: #selector(tapOnStopButton), for: .touchUpInside)
         stopButton.translatesAutoresizingMaskIntoConstraints = false
@@ -70,7 +70,7 @@ class MediaViewController: UIViewController {
     private lazy var previousTrackButton: UIButton = {
         let previousTrackButton = UIButton()
         previousTrackButton.contentMode = .scaleToFill
-        previousTrackButton.tintColor = .black
+        previousTrackButton.tintColor = .primaryText
         previousTrackButton.setImage(UIImage.init(systemName: "backward.end.alt.fill"), for: .normal)
         previousTrackButton.addTarget(nil, action: #selector(tapOnPrevSongButton), for: .touchUpInside)
         previousTrackButton.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +80,7 @@ class MediaViewController: UIViewController {
     private var nextTrackButton: UIButton = {
         let nextTrackButton = UIButton()
         nextTrackButton.contentMode = .scaleToFill
-        nextTrackButton.tintColor = .black
+        nextTrackButton.tintColor = .primaryText
         nextTrackButton.setImage(UIImage.init(systemName: "forward.end.alt.fill"), for: .normal)
         nextTrackButton.addTarget(nil, action: #selector(tapOnNextSongButton), for: .touchUpInside)
         nextTrackButton.translatesAutoresizingMaskIntoConstraints = false
@@ -88,7 +88,7 @@ class MediaViewController: UIViewController {
     }()
     
     private lazy var voiceRecorderButton: CustomButton = {
-        let voiceRecorderButton = CustomButton(titleText: "Диктофон", titleColor: .green, backgroundColor: .darkGray, tapAction: buttomVoiceRecorderAction)
+        let voiceRecorderButton = CustomButton(titleText: "voice_recorder".localized, titleColor: .green, backgroundColor: .darkGray, tapAction: buttomVoiceRecorderAction)
         return voiceRecorderButton
     }()
     
@@ -103,7 +103,7 @@ class MediaViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .backgroung
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         view.addSubviews(secretHidenButton, playPausaTrackButton, stopTrackButton, previousTrackButton, nextTrackButton, trackNameLabel, videosTableView, voiceRecorderButton)
         prepareTrack()
