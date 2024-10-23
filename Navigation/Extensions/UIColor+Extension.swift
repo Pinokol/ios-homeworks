@@ -10,5 +10,5 @@ import UIKit
 extension UIColor {
     
     static let backgroung = UIColor(named: "background")
-    static let primaryText = UIColor(named: "primaryText")
+    static let primary_Text = UIColor(named: "primaryText")
 }

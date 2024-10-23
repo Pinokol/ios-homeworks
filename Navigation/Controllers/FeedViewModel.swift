@@ -15,8 +15,10 @@ protocol FeedViewModelProtocol {
 //к дз MVVM
 class FeedViewModel: FeedViewModelProtocol {
     
-    private var secretWord = "Amur".localized
+    var secretWord = "Amur".localized
     let notificationCenter = NotificationCenter.default
+    
+    var status: String?
     
     init() {}
     
@@ -30,6 +32,8 @@ class FeedViewModel: FeedViewModelProtocol {
         let message = "word_is ".localized + (word == secretWord ? "correct".localized : "not_correct".localized)
         let name = NSNotification.Name(rawValue: message)
         let notification = Notification(name: name, object: nil, userInfo: nil)
+        
+        status = word == secretWord ? "correct".localized : "not_correct".localized
         notificationCenter.post(notification)
     }
     

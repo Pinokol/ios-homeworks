@@ -20,7 +20,7 @@ final class PhotosTableViewCell: UITableViewCell {
     var arrowImage: UIImageView = {
         let arrow = UIImageView()
         arrow.translatesAutoresizingMaskIntoConstraints = false
-        arrow.image = UIImage(systemName: "arrow.right")?.withTintColor(.primaryText!)
+        arrow.image = UIImage(systemName: "arrow.right")?.withTintColor(.primary_Text!)
         // arrow.image = UIImage(systemName: "arrow.right")?.withTintColor(.black, renderingMode: .alwaysOriginal)
         return arrow
     }()

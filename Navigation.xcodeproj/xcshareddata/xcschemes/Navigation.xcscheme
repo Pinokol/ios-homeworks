@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1520"
+   LastUpgradeVersion = "1540"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -46,8 +46,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1C5D0C732C45B09900E2F879"
-               BuildableName = "LoginViewModelTests.xctest"
-               BlueprintName = "LoginViewModelTests"
+               BuildableName = "LoginInspectorTests.xctest"
+               BlueprintName = "LoginInspectorTests"
                ReferencedContainer = "container:Navigation.xcodeproj">
             </BuildableReference>
          </TestableReference>
