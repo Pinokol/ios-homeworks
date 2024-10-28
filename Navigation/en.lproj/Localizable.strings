@@ -89,3 +89,8 @@
 
 "period_planet_Tatooine_revolution_around_star" = "Period of the planet Tatooine's revolution around its star";
 "for_your_convenience_you_can_set_the_correct_login_and_password" = "For your convenience, you can set the correct Login and Password";
+"Access to notifications not granted" = "Access to notifications not granted";
+"Error when adding a notification" = "Error when adding a notification";
+"Failed to log in using biometrics" = "Failed to log in using biometrics";
+"Biometric_authorization_error" = "Biometric authorization error";
+"Check out the latest updates" = "Check out the latest updates";

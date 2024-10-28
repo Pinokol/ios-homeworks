@@ -11,6 +11,7 @@ final class LogInViewController: UIViewController {
     
     var loginDelegate: LoginViewControllerDelegate?
     var coordinator: ProfileCoordinator?
+    let localAuthorizationService = LocalAuthorizationService.shared
     //let bruteForce = BruteForce()
     
     init() {
@@ -52,6 +53,23 @@ final class LogInViewController: UIViewController {
         stack.backgroundColor = .systemGray6
         stack.clipsToBounds = true
         return stack
+    }()
+    
+    private lazy var loginFaceIDButton: CustomButton = {
+        let autorizationType: String = switch localAuthorizationService.availableBiometricType {
+        case .none:
+            "none"
+        case .touchID:
+            "touchID"
+        case .faceID:
+            "faceID"
+        }
+        
+        let button = CustomButton(titleText: autorizationType, titleColor: .white, backgroundColor: .systemBlue, tapAction: logInBiometricsButtonPressed)
+        if button.titleLabel?.text == "none" {
+            button.isHidden = true
+        }
+        return button
     }()
     
     private lazy var loginButton: UIButton = {
@@ -142,7 +160,7 @@ final class LogInViewController: UIViewController {
     private func setupUI(){
         view.addSubview(loginScrollView)
         loginScrollView.addSubview(contentView)
-        contentView.addSubviews(vkLogo, loginStackView, loginButton, signUpButton)
+        contentView.addSubviews(vkLogo, loginStackView, loginButton, signUpButton, loginFaceIDButton)
         loginStackView.addArrangedSubview(loginField)
         loginStackView.addArrangedSubview(passwordField)
         convenientNotification()
@@ -192,6 +210,11 @@ final class LogInViewController: UIViewController {
             signUpButton.heightAnchor.constraint(equalToConstant: .height50),
             signUpButton.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor),
             signUpButton.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor),
+            
+            loginFaceIDButton.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: .spacing16),
+            loginFaceIDButton.heightAnchor.constraint(equalToConstant: .height50),
+            loginFaceIDButton.leadingAnchor.constraint(equalTo: signUpButton.leadingAnchor),
+            loginFaceIDButton.trailingAnchor.constraint(equalTo: signUpButton.trailingAnchor),
         ])
     }
     
@@ -230,6 +253,22 @@ final class LogInViewController: UIViewController {
             } catch let error {
                 print(error.localizedDescription)
                 loginErrorNotification(errorOfFIR: error.localizedDescription)
+            }
+        }
+    }
+    
+    @objc private func logInBiometricsButtonPressed() {
+        localAuthorizationService.authorizeIfPossible { result in
+            DispatchQueue.main.async { [self] in
+                switch result {
+                case .success(_):
+                    coordinator?.present(ProfileCoordinator.Presentation.profile, navigationController: navigationController, userService: CurrentUserService().authorization()
+                    )
+                    
+                case .failure(let error):
+                    print("Biometric_authorization_error".localized + ": \(error.localizedDescription)")
+                    loginErrorNotification(caseOf: .biometricBadAuthorization)
+                }
             }
         }
     }

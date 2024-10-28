@@ -89,4 +89,9 @@
 
 "period_planet_Tatooine_revolution_around_star" = "Период обращения планеты Татуин вокруг своей звезды";
 "for_your_convenience_you_can_set_the_correct_login_and_password" = "Для Вашего удобства можно установить правильные Имя и Пароль";
+"Access to notifications not granted" = "Доступ к уведомлениям не предоставлен";
+"Error when adding a notification" = "Ошибка при добавлении уведомления";
+"Failed to log in using biometrics" = "Не удалось войти в систему с использованием биометрических данных";
+"Biometric_authorization_error" = "Ошибка биометрической авторизации";
+"Check out the latest updates" = "Посмотрите последние обновления";
 

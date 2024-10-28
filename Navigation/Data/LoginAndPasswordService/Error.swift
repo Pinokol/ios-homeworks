@@ -15,6 +15,7 @@ enum LoginError: String, Error {
     case suchUserAlreadyExists = "Такой пользователь уже зарегистрирован"
     case authorized = "Успешно зарегистрирован новый пользователь"
     case successful = "Успешный вход"
+    case biometricBadAuthorization = "Failed to log in using biometrics"
 }
 
 enum mediaError: Error {

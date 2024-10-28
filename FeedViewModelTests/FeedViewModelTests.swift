@@ -10,14 +10,16 @@ import XCTest
 
 final class FeedViewModelTests: XCTestCase {
     
-    var feed: FeedViewModel = .init()
+    var feed: FeedViewModel!
     
     
     override func setUpWithError() throws {
+        feed = .init()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDownWithError() throws {
+        feed = nil
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     

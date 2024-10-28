@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import UserNotifications
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -26,5 +27,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
         self.window = window
     }
-    
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        NotificationCenter.default.post(name: NSNotification.sceneDidBecomeActive, object: nil)
+        if #available(iOS 16.0, *) {
+            UNUserNotificationCenter.current().setBadgeCount(0)
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+}
+
+extension NSNotification {
+    static var sceneDidBecomeActive: NSNotification.Name {
+        NSNotification.Name("sceneDidBecomeActive")
+    }
 }

@@ -67,6 +67,8 @@
 		1C5D0C772C45B09900E2F879 /* LoginInspectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D0C762C45B09900E2F879 /* LoginInspectorTests.swift */; };
 		1C802C242A75A03E00841E9E /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C802C232A75A03D00841E9E /* ProfileHeaderView.swift */; };
 		1C802C262A75A06800841E9E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C802C252A75A06800841E9E /* ProfileViewController.swift */; };
+		1C8D97432CCB075300A144A5 /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8D97422CCB075300A144A5 /* LocalNotificationsService.swift */; };
+		1C8D97462CD1005000A144A5 /* LocalAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8D97452CD1005000A144A5 /* LocalAuthorizationService.swift */; };
 		1C901A222AFA3DD20099994B /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C901A212AFA3DD20099994B /* Checker.swift */; };
 		1C901A262AFA41970099994B /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C901A252AFA41970099994B /* LoginInspector.swift */; };
 		1C901A2B2B04EC960099994B /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C901A2A2B04EC960099994B /* CustomButton.swift */; };
@@ -233,6 +235,8 @@
 		1C7F23D8583B8D2AF553275A /* Pods-Navigation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.release.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.release.xcconfig"; sourceTree = "<group>"; };
 		1C802C232A75A03D00841E9E /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		1C802C252A75A06800841E9E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		1C8D97422CCB075300A144A5 /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
+		1C8D97452CD1005000A144A5 /* LocalAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthorizationService.swift; sourceTree = "<group>"; };
 		1C901A212AFA3DD20099994B /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
 		1C901A252AFA41970099994B /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
 		1C901A2A2B04EC960099994B /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -502,6 +506,22 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		1C8D97412CCB06C200A144A5 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				1C8D97422CCB075300A144A5 /* LocalNotificationsService.swift */,
+			);
+			name = Notification;
+			sourceTree = "<group>";
+		};
+		1C8D97442CD1001100A144A5 /* AuthorizationService */ = {
+			isa = PBXGroup;
+			children = (
+				1C8D97452CD1005000A144A5 /* LocalAuthorizationService.swift */,
+			);
+			name = AuthorizationService;
+			sourceTree = "<group>";
+		};
 		1C901A202AFA3DB10099994B /* LoginAndPasswordService */ = {
 			isa = PBXGroup;
 			children = (
@@ -597,6 +617,8 @@
 			children = (
 				1CD9E4BC2A5F606D00D7C0E4 /* AppDelegate.swift */,
 				1CD9E4BE2A5F606D00D7C0E4 /* SceneDelegate.swift */,
+				1C8D97442CD1001100A144A5 /* AuthorizationService */,
+				1C8D97412CCB06C200A144A5 /* Notification */,
 				1C5D0C422BAAE19A00E2F879 /* Favorite */,
 				1C901A2E2B14C37D0099994B /* Coordinators */,
 				1C5D0BC42B65D67700E2F879 /* NetworkService */,
@@ -1121,6 +1143,7 @@
 				1C5D0BCA2B72D72E00E2F879 /* InfoTableViewCell.swift in Sources */,
 				1C901A3D2B3DADD30099994B /* BruteForce.swift in Sources */,
 				1CA946212A97D95500E41A51 /* LogInViewController.swift in Sources */,
+				1C8D97432CCB075300A144A5 /* LocalNotificationsService.swift in Sources */,
 				1C5D0C5D2BF4BA0300E2F879 /* UIColor+Extension.swift in Sources */,
 				1C5D0C402BAADF6A00E2F879 /* NavigationItems.xcdatamodeld in Sources */,
 				1C901A362B14C47D0099994B /* ProfileCoordinator.swift in Sources */,
@@ -1142,6 +1165,7 @@
 				1CA9462D2AAA5CB500E41A51 /* PhotosCollectionViewCell.swift in Sources */,
 				1C901A302B14C3C70099994B /* Coordinator.swift in Sources */,
 				1C901A472B59C0510099994B /* MediaViewController.swift in Sources */,
+				1C8D97462CD1005000A144A5 /* LocalAuthorizationService.swift in Sources */,
 				1C901A262AFA41970099994B /* LoginInspector.swift in Sources */,
 				1CD9E4BF2A5F606D00D7C0E4 /* SceneDelegate.swift in Sources */,
 				1C5D0BD22B836CCE00E2F879 /* Extension+CGFloat.swift in Sources */,
@@ -1731,7 +1755,8 @@
 				DEVELOPMENT_TEAM = SK82W45V56;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "$(MARKETING_VERSION) allow location";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "To access user data";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "1.0 allow location";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow location";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow access to Microfone.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1772,7 +1797,8 @@
 				DEVELOPMENT_TEAM = SK82W45V56;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "$(MARKETING_VERSION) allow location";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "To access user data";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "1.0 allow location";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow location";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow access to Microfone.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
