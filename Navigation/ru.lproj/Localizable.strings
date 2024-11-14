@@ -1,0 +1,97 @@
+/*
+ Localizable.strings
+ Navigation
+ 
+ Created by Виталий Мишин on 13.05.2024.
+ 
+ */
+
+
+"default_configuration" = "Конфигурация по умолчанию";
+
+"Navigation" = "Навигация";
+"did_sign_out_user" = "Вышел ли пользователь";
+"back" = "Назад";
+"cancel" = "Отмена";
+"create" = "Создать";
+"new_point" = "Новая точка";
+"The name of the song" = "Имя песни";
+"voice_recorder" = "Диктофон";
+"video" = "Видео";
+"recording" = "Запись";
+"play" = "Воспроизвести";
+"profile" = "Профиль";
+"photos" = "Фотографии";
+"photo_gallery" = "Фотогалерея";
+"login" = "Войти";
+"Password" = "Пароль";
+"register" = "Зарегистрироваться";
+"no" = "Нет";
+"ups" = "Упс";
+"name_song" = "Имя песни";
+"favorites" = "Избранное";
+"search" = "Поиск";
+"delete" = "Удалить";
+"feed" = "Лента";
+"info" = "Инфо";
+"To see" = "Посмотреть";
+"ok" = "Хорошо";
+"yes" = "Да";
+"attention" = "Внимание";
+"no_data_available!" = "Нет данных!";
+"error:" = "Ошибка:";
+"response_code:" = "Код ответа:";
+"headlines:" = "Заголовки:";
+"data_received:" = "Данные получены:";
+"json_processing_error:" = "Ошибка обработки JSON:";
+"unowned_status_code" = "Код статуса не используется";
+
+"status_code" = "Код состояния";
+"raw_responce" = "RAW ответ";
+"set_status" = "Установить статус";
+"hipster_tigr" = "Модный Тигр";
+"waiting_for_something" = "Ожидание чего то...";
+"Profile Name" = "Имя профиля";
+"Waiting for something" = "В ожидании чего-то";
+"set_your_status" = "Установить новый статус";
+"likes" = "Лайки";
+"views" = "Просмотры";
+"sec" = "сек";
+"process_time" = "Время обработки";
+"seconds" = "секунд";
+"my_post" = "Мой пост";
+"first_post" = "Первый пост";
+"media" = "Медиа";
+"map" = "Карта";
+"enter_secret_word" = "Введите секретное слово";
+"checking_secret_word" = "Проверка секретного слова";
+"right" = "Верно";
+"no_true" = "Не верно";
+"Amur" = "Амур";
+"word_is " = "Слово ";
+"correct" = "Правильно";
+"not_correct" = "Не правильно";
+"alert" = "Предупреждение";
+"hurray_we_got_alert" = "Ура!!! \n У нас получился алёрт";
+"success" = "Успешно!!!!";
+"filter_did_not_work"  = "Фильтр не сработал";
+
+"set_route" = "Проложить маршрут";
+"new_point" = "Новая метка";
+"label_name" = "Название метки";
+"Favorites posts" = "Избранные посты";
+"enter_author" = "Введите автора";
+"sorting_posts_author" = "Сортировка постов по автору";
+"author_name" = "Имя автора";
+"author" = "Автор";
+"favorites" = "Избранное";
+"favorites_posts" = "Избранные посты";
+
+"period_planet_Tatooine_revolution_around_star" = "Период обращения планеты Татуин вокруг своей звезды";
+"for_your_convenience_you_can_set_the_correct_login_and_password" = "Для Вашего удобства можно установить правильные Имя и Пароль";
+"Access to notifications not granted" = "Доступ к уведомлениям не предоставлен";
+"Error when adding a notification" = "Ошибка при добавлении уведомления";
+"Failed to log in using biometrics" = "Не удалось войти в систему с использованием биометрических данных";
+"Biometric_authorization_error" = "Ошибка биометрической авторизации";
+"Check out the latest updates" = "Посмотрите последние обновления";
+
