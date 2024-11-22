@@ -64,7 +64,7 @@ final class FavoriteService: FavoriteServiceProtocol {
             let newItem = FavoritesPostData(context: coreDataService.backgroundContext)
             newItem.author = post.author
             newItem.descriptions = post.description
-            newItem.image = post.image
+            newItem.image = post.imageName
             newItem.id = Int64(post.id)
             newItem.isFavorite = true
             if let rowIndex = postExamples.firstIndex(where: {Int64($0.id) == newItem.id}) {
