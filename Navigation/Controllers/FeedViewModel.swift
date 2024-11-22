@@ -1,0 +1,43 @@
+//
+//  FeedViewModel.swift
+//  Navigation
+//
+//  Created by Виталий Мишин on 20.11.2023.
+//
+
+import Foundation
+
+protocol FeedViewModelProtocol {
+    func check(inputSecretWord word: String)
+    func returnCorrectSecretWord() -> String
+}
+
+//к дз MVVM
+class FeedViewModel: FeedViewModelProtocol {
+    
+    var secretWord = "Amur".localized
+    let notificationCenter = NotificationCenter.default
+    
+    var status: String?
+    
+    init() {}
+    
+    var onShowNextView: (() -> Void)?
+    
+    lazy var onTapShowNextView: () -> Void = { [weak self] in
+        self?.onShowNextView?()
+    }
+    
+    func check(inputSecretWord word: String) {
+        let message = "word_is ".localized + (word == secretWord ? "correct".localized : "not_correct".localized)
+        let name = NSNotification.Name(rawValue: message)
+        let notification = Notification(name: name, object: nil, userInfo: nil)
+        
+        status = word == secretWord ? "correct".localized : "not_correct".localized
+        notificationCenter.post(notification)
+    }
+    
+    func returnCorrectSecretWord() -> String{
+        return secretWord
+    }
+}
